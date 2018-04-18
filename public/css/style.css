@@ -3,17 +3,74 @@ body {
     width: 100%;
     height: 100%;
 }
-
-* {
-    margin: 0;
-    padding: 0;
+.secontitle{
+    font-family: "Raleway", "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #222;
+    text-align:left;
 }
+#maintitle{
+    font-family: 'Bree Serif', serif;
+    color: rgb(75, 75, 75);
+}
+.imgItem{
+    width: 150px;
+}
+@media screen and (max-width: 800px) {
+    .imgItem{
+        width: 100px;
+    }
+}
+.item{
+    margin-bottom: 20px;
+}
+.desc{
+    font-family: "Raleway", "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    text-align:left !important; 
+}
+.price{
+    text-align: left;
+    color: #f09c17;
+    font-size: 32px;
+}
+.priceItem{
+    text-align: left;
+    color: #f09c17;
+    font-size: 32px;
+}
+.btn1{
+   background-color: #f09c17;
+   color:white;
+   border-radius: 5px;
+   border: none;
+   border-bottom: 6px solid #cf8714;
+    font-size: 18px;
+    padding: 6px;
+   padding-left: 20px;
+   padding-right: 20px;
+    transition-duration: 0.2s;
+}
+.btn1:hover{
+    border-bottom: 6px solid #b47713;
+    background-color: #cf8712;
+    border:2px solid inherit;
+
+}
+
 
 body {
     font-family: "Raleway", "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
     background-attachment: fixed;
 }
-
+.smImg{
+    width: 60px;
+}
+.blockButtonPanierBtn
+{
+    float: right;
+}
+.panierItem{
+    margin-bottom: 20px;
+}
 .right-part {
     width: 90%;
     position: relative;
@@ -32,80 +89,93 @@ header {
 header > h1 {
     text-transform: uppercase;
 }
-
+#bAccueil{
+    margin-top: 50px;
+    margin-bottom: 40px;
+    width: 500px; 
+    background-color: inherit;
+    border: none;
+ 
+    position: relative;
+    left: 10%;
+}
+.logo{
+    width: 500px; 
+}
 main {
     width: 100%;
-    text-align: center;
+  
     min-height: 79vh;
     padding-bottom: 60px;
 }
 
-main > h2 {
-    margin: 0;
-    padding: 10px;
-    margin-bottom: 30px;
-    color: white;
-}
 
 nav {
-    width: 10%;
-    background-color: #222;
-    position: fixed;
+    width: 100%;
+    background-color:inherit;
     top: 0;
-    height: 100%;
+    border-bottom: 4px solid #f09c17;
 }
 
 nav ul {
-    width: 100%;
-    padding: 0;
+     list-style-type: none;
     margin: 0;
-    margin-top: 50px;
-    list-style-type: none;
+    padding: 0;
+    overflow: hidden;
+    background-color: inherit;
+  
 }
 
 nav li {
-    width: 100%;
+
     line-height: 40px;
+    float: left;
 }
 
 nav li > a {
+
     display: block;
-    padding-left: 30px;
-    padding-right: 10px;
-}
-
-.reduced {
-    height: 40px;
-    line-height: 1.2em;
-}
-
-nav li > h1 {
-    color: white;
+    color: rgb(75, 75, 75);
     text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 16px;
+    transition-duration: 0.2s;
 }
-
-nav li > a:hover {
-    background: rgba(255, 255, 255, 0.2);
-    padding-left: 30px;
-}
-
-nav a, nav a:hover {
+nav li >a:hover {
+    background-color: #f09c17 !important;
     color: white;
     text-decoration: none;
-    cursor: pointer;
 }
 
-nav ul li > span.glyphicon {
-    float: left;
-    color: whitesmoke;
-    margin-top: 12px;
-    padding-left: 12px;
-    display: none;
+.payingBlock{
+    background-color: #f09c17;
+    padding: 20px;
+}
+.payingBlock > h2{
+   color: white;
+}
+.payingBlock > p{
+    color: white;
+ }
+.payingButton{
+    color: white;
+    background-color: inherit;
+    border: 4px solid white;
+    padding: 12px;
+    width: 200px;
+    font-size: 26px;
+    transition-duration: 0.2s;
+}
+.payingButton:hover{
+    color: #f09c17;
+    background-color: white;
+    border: 4px solid #f09c17;
+  
 }
 
-nav ul li:hover > span.glyphicon {
-    display: block;
-}
+
+
 
 .datatable {
     border-collapse: collapse;

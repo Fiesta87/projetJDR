@@ -28,10 +28,12 @@ class ProductTable {
 
     public function fetchPage($page) {
 
+        // on récupère le nombre d'article par page spécifié dans la BD (Metadata)
         $this->nbProductPerPage = intval($this->_tableMetadata->findByNom('page')->_valeur);
 
         $this->offset = ($page-1) * $this->nbProductPerPage;
 
+        // pagination
         $resultSet = $this->_tableGateway->select(function (Select $select) {
             $select->limit($this->nbProductPerPage)->offset($this->offset);
         });

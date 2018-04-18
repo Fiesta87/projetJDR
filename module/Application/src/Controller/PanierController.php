@@ -35,6 +35,7 @@ class PanierController extends AbstractActionController
         $this->_tableHistorique = $tableHistorique;
     }
 
+    // ajoute le produit spécifié par l'URL au panier puis redirige vers la page précédente avec un message de confirmation
     public function addpanierAction() {
 
         $redirectUrl = (string)$this->params()->fromQuery('redirectUrl', '');
@@ -44,11 +45,17 @@ class PanierController extends AbstractActionController
 
         $idProduct = (int)$this->params()->fromRoute('id', -1);
 
+        // nouvelle entré dans le panier de l'utilisateur
+
         $panier = new Panier();
         $panier->_idUser = $this->_authManager->getUserData()['id'];
         $panier->_idProduct = $idProduct;
 
+        // ajout le panier en BD
+
         $this->_tablePanier->insert($panier);
+
+        // on redirige sur la page spécifié par l'URL
 
         if (!empty($redirectUrl)) {
             $uri = UriFactory::factory($redirectUrl);
@@ -63,13 +70,24 @@ class PanierController extends AbstractActionController
         }
     }
 
+    // affiche le panier de l'utilisateur
     public function panierAction() {
+
+        // si on vient sur cette page après avoir ajouté supprimer un article du panier,
+        // on le récupère pour réaliser un affichage de confirmation
 
         $idProductRemoveFromPanier = (string)$this->params()->fromQuery('idProductRemoveFromPanier', '');
 
         $productRemove = '';
 
+        if(!empty($idProductRemoveFromPanier)){
+            $productRemove = $this->_tableProduct->find($idProductRemoveFromPanier);
+        }
+
+        // la liste des produits du panier
         $products = $this->_tablePanier->find($this->_authManager->getUserData()['id']);
+
+        // calcul des prix HT et TTC
 
         $prixHT = 0;
 
@@ -80,10 +98,6 @@ class PanierController extends AbstractActionController
 
         $prixTTC = $prixHT + $prixHT * ($taxe / 100);
 
-        if(!empty($idProductRemoveFromPanier)){
-            $productRemove = $this->_tableProduct->find($idProductRemoveFromPanier);
-        }
-
         return new ViewModel([
             'products' => $products,
             'productRemove' => $productRemove,
@@ -93,17 +107,20 @@ class PanierController extends AbstractActionController
         ]);
     }
 
+    // supprime un produit du panier
     public function removepanierAction() {
 
-        $idProduct = (int)$this->params()->fromRoute('id', -1);
-
-        $redirectUrl = "/panier?idProductRemoveFromPanier=" . $idProduct;
+        // on supprime le produit du panier de l'utilisateur connecté
 
         $idProduct = (int)$this->params()->fromRoute('id', -1);
 
         $idUser = $this->_authManager->getUserData()['id'];
 
         $this->_tablePanier->delete($idUser, $idProduct);
+
+        // on redirige vers la liste des articles du panier en affichant un message de confirmation
+
+        $redirectUrl = "/panier?idProductRemoveFromPanier=" . $idProduct;
 
         if (!empty($redirectUrl)) {
             $uri = UriFactory::factory($redirectUrl);
@@ -118,9 +135,13 @@ class PanierController extends AbstractActionController
         }
     }
 
+    // affiche le formulaire de paiement du panier et traite également le retour après la saisie de l'utilisateur
     public function payerAction() {
 
+        // la liste des produits du panier
         $products = $this->_tablePanier->find($this->_authManager->getUserData()['id']);
+
+        // calcul des prix HT et TTC
 
         $prixTotal = 0;
 
@@ -137,21 +158,25 @@ class PanierController extends AbstractActionController
 
         $form = new PaymentForm();
 
+        // si on a complété le formulaire
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
             
             $form->setData($data);
             
+            // on détermine si c'est un succes ou non
             $succes = (float)rand()/(float)getrandmax();
 
             $isError = $succes >= 0.5;
 
+            // si le paiement a réussit
             if(!$isError){
-
+                // on redirige toute la requette vers l'affichage du paiement
                 return $this->forward()->dispatch('Application\Controller\PanierController', ['action' => "infopaiement"]);
             }
             
         } else {
+            // on remplit une partie du formulaire
             $form->setData(['username'=>$username]);
         }
 
@@ -162,12 +187,17 @@ class PanierController extends AbstractActionController
         ]);
     }
 
+    // affiche les informations d'un paiement fructueux
     public function infopaiementAction(){
 
+        // on récupère les données saisies
         $data = $this->params()->fromPost();
         $idTransaction = $this->genererIDTransaction();
 
+        // la liste des produits du panier
         $products = $this->_tablePanier->find($this->_authManager->getUserData()['id']);
+
+        // calcul des prix HT et TTC
 
         $prixTotal = 0;
 
@@ -178,8 +208,10 @@ class PanierController extends AbstractActionController
 
         $prixTotal = $prixTotal + $prixTotal * ($taxe / 100);
 
+        // le panier passe dans l'historique des achats
         $this->_tableHistorique->insertAllToHistorique($this->_authManager->getUserData()['id'], $products);
 
+        // on vide le panier
         $this->_tablePanier->deleteAllPanierOfUser($this->_authManager->getUserData()['id']);
 
         return new ViewModel([
@@ -189,6 +221,7 @@ class PanierController extends AbstractActionController
         ]);
     }
 
+    // crée un ID de transaction de 5 lettres puis 10 chiffres
     private function genererIDTransaction(){
         $lettres = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         $chiffres = "0123456789";

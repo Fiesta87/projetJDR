@@ -21,6 +21,7 @@ return [
 
             /*  ---------------- IndexController ---------------- */
 
+            // liste des produits du catalogue
             'index' => [
                 'type'    => Segment::class,
                 'options' => [
@@ -36,6 +37,7 @@ return [
                 ],
             ],
 
+            // affichage d'un produit spécifique
             'produit' => [
                 'type'    => Segment::class,
                 'options' => [
@@ -50,6 +52,7 @@ return [
                 ],
             ],
 
+            // affichage de l'historique des achats d'un utilisateur
             'historique' => [
                 'type'    => Segment::class,
                 'options' => [
@@ -60,7 +63,7 @@ return [
                     ],
                 ],
             ],
-
+/*
             'compte' => [
                 'type'    => Segment::class,
                 'options' => [
@@ -70,10 +73,11 @@ return [
                         'action'        => 'compte',
                     ],
                 ],
-            ],
+            ],*/
 
             /*  ---------------- PanierController ---------------- */
 
+            // ajoute le produit spécifié par l'URL au panier puis redirige vers la page précédente avec un message de confirmation
             'addpanier' => [
                 'type'    => Segment::class,
                 'options' => [
@@ -88,6 +92,7 @@ return [
                 ],
             ],
 
+            // affiche le panier de l'utilisateur
             'panier' => [
                 'type'    => Segment::class,
                 'options' => [
@@ -99,6 +104,7 @@ return [
                 ],
             ],
 
+            // supprime un produit du panier
             'removepanier' => [
                 'type'    => Segment::class,
                 'options' => [
@@ -113,6 +119,7 @@ return [
                 ],
             ],
 
+            // affiche le formulaire de paiement du panier et traite également le retour après la saisie de l'utilisateur
             'payer' => [
                 'type'    => Segment::class,
                 'options' => [
@@ -124,6 +131,7 @@ return [
                 ],
             ],
 
+            // affiche les informations d'un paiement fructueux
             'infopaiement' => [
                 'type'    => Segment::class,
                 'options' => [
@@ -137,6 +145,7 @@ return [
 
             /*  ---------------- AdminController ---------------- */
 
+            // liste les produits du catalogue pour leur management
             'admin' => [
                 'type'    => Segment::class,
                 'options' => [
@@ -152,6 +161,7 @@ return [
                 ],
             ],
 
+            // supprime un produit
             'delete' => [
                 'type'    => Segment::class,
                 'options' => [
@@ -166,6 +176,7 @@ return [
                 ],
             ],
 
+            // modifit un produit
             'edit' => [
                 'type'    => Segment::class,
                 'options' => [
@@ -180,6 +191,7 @@ return [
                 ],
             ],
 
+            // ajoute un produit
             'add' => [
                 'type'    => Segment::class,
                 'options' => [

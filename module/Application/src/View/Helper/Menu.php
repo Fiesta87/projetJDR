@@ -57,18 +57,10 @@ class Menu extends AbstractHelper
             return ''; // Do nothing if there are no items.
         
         $result = '<nav role="navigation">';
-        $result .= '<div class="navbar-header">';
-        $result .= '<button type="button" class="navbar-toggle" data-toggle="collapse"';
-        $result .= 'data-target=".navbar-ex1-collapse">';
-        $result .= '<span class="sr-only">Toggle navigation</span>';
-        $result .= '<span class="icon-bar"></span>';
-        $result .= '<span class="icon-bar"></span>';
-        $result .= '<span class="icon-bar"></span>';
-        $result .= '</button>';
-        $result .= '</div>';
+
         
-        $result .= '<div class="collapse navbar-collapse navbar-ex1-collapse">';        
-        $result .= '<ul class="nav navbar-nav">';
+        $result .= '<div class="">';        
+        $result .= '<ul class="nav">';
         
         // Render items
         foreach ($this->items as $item) {
@@ -112,12 +104,12 @@ class Menu extends AbstractHelper
             
             $dropdownItems = $item['dropdown'];
             
-            $result .= '<li class="dropdown ' . ($isActive?'active':'') . '">';
+            /*$result .= '<li class="dropdown ' . ($isActive?'active':'') . '">';
             $result .= '<a href="#" class="dropdown-toggle" data-toggle="dropdown">';
             $result .= $escapeHtml($label) . ' <b class="caret"></b>';
             $result .= '</a>';
            
-            $result .= '<ul class="dropdown-menu">';
+            $result .= '<ul class="dropdown-menu">';*/
             foreach ($dropdownItems as $item) {
                 $link = isset($item['link']) ? $item['link'] : '#';
                 $label = isset($item['label']) ? $item['label'] : '';
@@ -126,8 +118,8 @@ class Menu extends AbstractHelper
                 $result .= '<a href="'.$escapeHtml($link).'">'.$escapeHtml($label).'</a>';
                 $result .= '</li>';
             }
-            $result .= '</ul>';
-            $result .= '</li>';
+           /* $result .= '</ul>';
+            $result .= '</li>';*/
             
         } else {        
             $link = isset($item['link']) ? $item['link'] : '#';

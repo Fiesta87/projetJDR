@@ -8,6 +8,8 @@ use Zend\Router\Http\Segment;
 return [
     'router' => [
         'routes' => [
+
+            // affichage et traitement de la réponse du formulaire pour connecter un utilisateur
             'login' => [
                 'type' => Literal::class,
                 'options' => [
@@ -18,6 +20,8 @@ return [
                     ],
                 ],
             ],
+
+            // deconnecte un utilisateur et redirige sur la page de login
             'logout' => [
                 'type' => Literal::class,
                 'options' => [
@@ -28,6 +32,8 @@ return [
                     ],
                 ],
             ],
+
+            // affiche le compte de l'utilisateur pour modifier des paramètres personnels
             'compte' => [
                 'type' => Literal::class,
                 'options' => [

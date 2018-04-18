@@ -6,7 +6,7 @@ use Zend\Form\Fieldset;
 use Zend\InputFilter\InputFilter;
 
 /**
- * This form is used to collect user's credit card informations, password and 'Remember Me' flag.
+ * This form is used to collect user's credit card informations
  */
 class PaymentForm extends Form
 {

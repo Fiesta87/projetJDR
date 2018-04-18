@@ -36,8 +36,8 @@
 <div class='btn-group pageGroup'>
 
     <?php if($page != $pagePrecedente): ?>
-    <a href="/admin/<?= $pagePrecedente ?>"><button *ngIf="numPage!=1" type="button" class='btn btn-primary' id="pagePrecedente">Page précédente</button></a>
+    <a href="/admin/<?= $pagePrecedente ?>"><button *ngIf="numPage!=1" type="button" class='btn1' id="pagePrecedente">Page précédente</button></a>
     <?php endif ?>
-    <button type="button" class='btn btn-primary'><?= $page ?></button>
-    <a href="/admin/<?= $pageSuivante ?>"><button *ngIf="numPage!=pageMax" type="button" class='btn btn-primary' id="pageSuivante">Page suivante</button></a>
+    <button type="button" class='btn1'><?= $page ?></button>
+    <a href="/admin/<?= $pageSuivante ?>"><button *ngIf="numPage!=pageMax" type="button" class='btn1' id="pageSuivante">Page suivante</button></a>
 </div>

@@ -13,12 +13,12 @@
 
     <div class='col-sm-10 itemTxt'>
         <h2 class='secontitle'> <?= $p->_nom ?> </h2>
-        <span class='desc'> <?= $p->_description ?> </span><br/>
-        <span class='price'>
+        <p class='desc'> <?= $p->_description ?> </p><br/>
+        <h class='price'>
             <?= $p->_prix ?> €
-            <a href="/produit/<?= $p->_id ?>"><button type="button" class='btn btn-primary btn1'>Détail</button></a>
-            <a href="/addpanier/<?= $p->_id ?>?redirectUrl=/?idProductAddToPanier=<?= $p->_id ?>"><button type="button" class='btn btn-primary btn1'><i class='fa fa-shopping-cart iconNav'></i>Ajouter au panier</button></a>
-        </span>
+            <a href="/produit/<?= $p->_id ?>"><button type="button" class=' btn1'>Détail</button></a>
+            <a href="/addpanier/<?= $p->_id ?>?redirectUrl=/?idProductAddToPanier=<?= $p->_id ?>"><button type="button" class=' btn1'><i class='fa fa-shopping-cart iconNav'></i>Ajouter au panier</button></a>
+        </h>
     </div>
 </div>
 <?php endforeach; ?>
@@ -26,8 +26,8 @@
 <div class='btn-group pageGroup'>
 
     <?php if($page != $pagePrecedente): ?>
-    <a href="/page/<?= $pagePrecedente ?>"><button *ngIf="numPage!=1" type="button" class='btn btn-primary' id="pagePrecedente">Page précédente</button></a>
+    <a href="/page/<?= $pagePrecedente ?>"><button *ngIf="numPage!=1" type="button" class='btn1' id="pagePrecedente">Page précédente</button></a>
     <?php endif ?>
-    <button type="button" class='btn btn-primary'><?= $page ?></button>
-    <a href="/page/<?= $pageSuivante ?>"><button *ngIf="numPage!=pageMax" type="button" class='btn btn-primary' id="pageSuivante">Page suivante</button></a>
+    <button type="button" class='btn1'><?= $page ?></button>
+    <a href="/page/<?= $pageSuivante ?>"><button *ngIf="numPage!=pageMax" type="button" class='btn1' id="pageSuivante">Page suivante</button></a>
 </div>

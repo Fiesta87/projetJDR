@@ -34,9 +34,13 @@ class AdminController extends AbstractActionController
         $this->_tableHistorique = $tableHistorique;
     }
 
+    // liste les produits du catalogue pour leur management
     public function adminAction() {
 
         $page = (int)$this->params()->fromRoute('page', -1);
+
+        // si on vient sur cette page après avoir ajouté/modifié/supprimé un article,
+        // on récupère son nom pour réaliser un affichage de confirmation
 
         $nameProductDeleted = (string)$this->params()->fromQuery('nameProductDeleted', '');
 
@@ -44,6 +48,7 @@ class AdminController extends AbstractActionController
 
         $nameProductModified = (string)$this->params()->fromQuery('nameProductModified', '');
 
+        // les pages commencent à 1
         $pagePrecedente = max($page-1, 1);
         $pageSuivante = $page+1;
 
@@ -58,6 +63,7 @@ class AdminController extends AbstractActionController
         ]);
     }
 
+    // supprime un produit
     public function deleteAction() {
 
         $idProduct = (int)$this->params()->fromRoute('id', -1);
@@ -66,17 +72,21 @@ class AdminController extends AbstractActionController
 
         $productDeleted = $this->_tableProduct->find($idProduct);
 
+        // si le produit à supprimer n'existe pas -> 404
         if ($productDeleted == null) {
             $this->getResponse()->setStatusCode(404);
             return;
         }
 
+        // on spécifit dans l'URL de redirection le nom du produit qui a été supprimé
         $redirectUrl = "/admin/" . $page . "?nameProductDeleted=" . $productDeleted->_nom;
 
+        // suppression du produit et de ses références dans les paniers et historiques des utilisateurs
         $this->_tableProduct->delete($productDeleted);
         $this->_tablePanier->deleteProduct($idProduct);
         $this->_tableHistorique->delete($idProduct);
 
+        // on redirige vers la liste avec un affichage pour confirmer la suppression
         if (!empty($redirectUrl)) {
             $uri = UriFactory::factory($redirectUrl);
             if (!$uri->isValid() || $uri->getHost()!=null)
@@ -90,9 +100,12 @@ class AdminController extends AbstractActionController
         }
     }
     
-    public function editAction() 
-    {
+    // modifit un produit
+    public function editAction() {
+
         $id = (int)$this->params()->fromRoute('id', -1);
+
+        // si l'id spécifié est négatif ou n'exite pas -> 404
         if ($id<1) {
             $this->getResponse()->setStatusCode(404);
             return;
@@ -107,12 +120,13 @@ class AdminController extends AbstractActionController
 
         $form = new ProductEditForm();
         
+        // si on a complété le formulaire
         if ($this->getRequest()->isPost()) {
 
             $data = $this->params()->fromPost();
 
             $form->setData($data);
-
+            
             if(!$form->isValid()) {
 
                 return new ViewModel(array(
@@ -128,11 +142,26 @@ class AdminController extends AbstractActionController
                 'description' => $data['description']
             ];
 
+            // on réalise la mise à jour de l'article
             $this->_tableProduct->update($product, $update);
+
+            // on redirige vers la liste des articles en affichant un message de confirmation
 
             $redirectUrl = "/admin?nameProductModified=" . $data['nom'];
             
-            $this->redirect()->toUrl($redirectUrl);
+            if (!empty($redirectUrl)) {
+                $uri = UriFactory::factory($redirectUrl);
+                if (!$uri->isValid() || $uri->getHost()!=null)
+                    throw new \Exception('Incorrect redirect URL: ' . $redirectUrl);
+            }
+    
+            if(empty($redirectUrl)) {
+                return $this->redirect()->toRoute('index');
+            } else {
+                $this->redirect()->toUrl($redirectUrl);
+            }
+
+        // sinon on remplit le formulaire avec les infos du produit et on l'affiche
         } else {
             $form->setData([
                 'nom'=>$product->_nom,
@@ -148,12 +177,12 @@ class AdminController extends AbstractActionController
         }
     }
     
+    // ajoute un produit
     public function addAction() 
     {
         $form = new ProductEditForm();
 
-        $image = "/img/img" . random_int(12, 21) . ".jpg";
-        
+        // si on a complété le formulaire
         if ($this->getRequest()->isPost()) {
 
             $data = $this->params()->fromPost();
@@ -169,6 +198,8 @@ class AdminController extends AbstractActionController
                 ));
             }
 
+            // on crée le nouveau produit
+
             $product = new Product();
 
             $product->_nom = $data['nom'];
@@ -176,12 +207,31 @@ class AdminController extends AbstractActionController
             $product->_description = $data['description'];
             $product->_image = $data['image'];
 
+            // on ajoute le produit en BD
             $this->_tableProduct->insert($product, $update);
+
+            // on redirige vers la liste des articles en affichant un message de confirmation
 
             $redirectUrl = "/admin?nameProductAdded=" . $data['nom'];
             
-            $this->redirect()->toUrl($redirectUrl);
+            if (!empty($redirectUrl)) {
+                $uri = UriFactory::factory($redirectUrl);
+                if (!$uri->isValid() || $uri->getHost()!=null)
+                    throw new \Exception('Incorrect redirect URL: ' . $redirectUrl);
+            }
+    
+            if(empty($redirectUrl)) {
+                return $this->redirect()->toRoute('index');
+            } else {
+                $this->redirect()->toUrl($redirectUrl);
+            }
+
+        // sinon on crée un formulaire vide et on l'affiche
         } else {
+
+            // on associe une image random
+            $image = "/img/img" . random_int(12, 21) . ".jpg";
+
             $form->setData([
                 'image'=> $image,
             ]);

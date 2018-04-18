@@ -22,6 +22,7 @@ class AuthController extends AbstractActionController
         $this->_authManager = $authManager;
     }
 
+    // affichage et traitement de la réponse du formulaire pour connecter un utilisateur
     public function loginAction() {
         $redirectUrl = (string)$this->params()->fromQuery('redirectUrl', '');
         if (strlen($redirectUrl)>2048) {
@@ -70,12 +71,14 @@ class AuthController extends AbstractActionController
         ]);
     }
 
+    // deconnecte un utilisateur et redirige sur la page de login
     public function logoutAction() {
         $this->_authManager->logout();
 
         return $this->redirect()->toRoute('login');
     }
 
+    // affiche le compte de l'utilisateur pour modifier des paramètres personnels
     public function compteAction() {
 
         $form = new UserForm();

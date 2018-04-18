@@ -7,7 +7,7 @@ use Zend\InputFilter\InputFilter;
 use Zend\Validator\Digits;
 
 /**
- * This form is used to collect user's login, password and 'Remember Me' flag.
+ * This form is used to collect product informations
  */
 class ProductEditForm extends Form
 {
@@ -27,6 +27,7 @@ class ProductEditForm extends Form
 
     protected function addElements() 
     {
+        // Add "nom" field
         $this->add([            
             'type'  => 'text',
             'name' => 'nom',
@@ -35,6 +36,7 @@ class ProductEditForm extends Form
             ],
         ]);
         
+        // Add "prix" field
         $this->add([            
             'type'  => 'text',
             'name' => 'prix',
@@ -43,6 +45,7 @@ class ProductEditForm extends Form
             ],
         ]);
         
+        // Add "description" field
         $this->add([            
             'type'  => 'text',
             'name' => 'description',
@@ -51,11 +54,13 @@ class ProductEditForm extends Form
             ],
         ]);
         
+        // Add "image" field
         $this->add([            
             'type'  => 'hidden',
             'name' => 'image',
         ]);
         
+        // Add the Submit button
         $this->add([
             'type'  => 'submit',
             'name' => 'submit',
@@ -75,7 +80,7 @@ class ProductEditForm extends Form
         $inputFilter = new InputFilter();        
         $this->setInputFilter($inputFilter);
                 
-        // Add input for "prix" field
+        // Add input for "nom" field
         $inputFilter->add([
                 'name'     => 'nom',
                 'required' => true,

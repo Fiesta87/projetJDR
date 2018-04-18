@@ -28,9 +28,13 @@ class IndexController extends AbstractActionController
         $this->_tableHistorique = $tableHistorique;
     }
 
+    // liste des produits du catalogue
     public function indexAction() {
 
         $page = (int)$this->params()->fromRoute('page', -1);
+
+        // si on vient sur cette page après avoir ajouté un article au panier,
+        // on le récupère pour réaliser un affichage de confirmation
 
         $idProductAddToPanier = (string)$this->params()->fromQuery('idProductAddToPanier', '');
 
@@ -40,6 +44,7 @@ class IndexController extends AbstractActionController
             $productPanier = $this->_tableProduct->find($idProductAddToPanier);
         }
 
+        // les pages commencent à 1
         $pagePrecedente = max($page-1, 1);
         $pageSuivante = $page+1;
 
@@ -52,10 +57,14 @@ class IndexController extends AbstractActionController
         ]);
     }
 
+    // affichage d'un produit spécifique
     public function produitAction() {
 
         $id = (int)$this->params()->fromRoute('id', -1);
 
+        // si on vient sur cette page après avoir ajouté un article au panier,
+        // on le récupère pour réaliser un affichage de confirmation
+        
         $idProductAddToPanier = (string)$this->params()->fromQuery('idProductAddToPanier', '');
 
         $productPanier = '';
@@ -70,6 +79,7 @@ class IndexController extends AbstractActionController
         ]);
     }
 
+    // affichage de l'historique des achats d'un utilisateur
     public function historiqueAction() {
 
         return new ViewModel([
