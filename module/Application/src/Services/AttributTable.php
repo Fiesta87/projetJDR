@@ -4,15 +4,12 @@ namespace Application\Services;
 use Zend\Db\TableGateway\TableGatewayInterface;
 use Zend\Db\Sql\Select;
 use Application\Model\Attribut;
-use Application\Services\MetadataTable;
 
-class FicheTable {
+class AttributTable {
     protected $_tableGateway;
-    private $_tableMetadata;
 
-    public function __construct(TableGatewayInterface $tableGateway, MetadataTable $tableMetadata){
+    public function __construct(TableGatewayInterface $tableGateway){
         $this->_tableGateway = $tableGateway;
-        $this->_tableMetadata = $tableMetadata;
     }
 
     public function getAttributsOfFiche($idFiche) { 
