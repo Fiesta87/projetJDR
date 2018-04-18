@@ -6,7 +6,7 @@ use Zend\Db\Sql\Select;
 use Application\Model\Product;
 use Application\Services\MetadataTable;
 
-class ProductTable {
+class FicheTable {
     protected $_tableGateway;
     private $_tableMetadata;
 

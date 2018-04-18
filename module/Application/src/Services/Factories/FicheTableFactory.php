@@ -6,15 +6,15 @@ use Zend\ServiceManager\Factory\FactoryInterface;
 use Zend\Session\SessionManager;
 use Zend\Authentication\Storage\Session as SessionStorage;
 use Interop\Container\ContainerInterface;
-use Application\Services\ProductTableGateway;
-use Application\Services\ProductTable;
+use Application\Services\FicheTableGateway;
+use Application\Services\FicheTable;
 use Application\Services\MetadataTable;
 
 
 /**
  * The factory responsible for creating of authentication service.
  */
-class ProductTableFactory implements FactoryInterface
+class FicheTableFactory implements FactoryInterface
 {
     /**
      * This method creates the Zend\Authentication\AuthenticationService service 
@@ -23,8 +23,8 @@ class ProductTableFactory implements FactoryInterface
     public function __invoke(ContainerInterface $container, 
                     $requestedName, array $options = null)
     {
-        $tableGateway = $container->get(ProductTableGateway::class);
-    $table = new ProductTable($tableGateway, $container->get(MetadataTable::class));
+        $tableGateway = $container->get(FicheTableGateway::class);
+    $table = new FicheTable($tableGateway, $container->get(MetadataTable::class));
         return $table;
     }
 }

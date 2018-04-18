@@ -9,12 +9,12 @@ use Zend\Validator\Digits;
 /**
  * This form is used to collect product informations
  */
-class ProductEditForm extends Form
+class FicheEditForm extends Form
 {
-    public function __construct(/*Product $elem*/)
+    public function __construct()
     {
         // Define form name
-        parent::__construct('productedit-form');
+        parent::__construct('ficheedit-form');
      
         // Set POST method for this form
         $this->setAttribute('method', 'post');
@@ -27,7 +27,7 @@ class ProductEditForm extends Form
 
     protected function addElements() 
     {
-        // Add "nom" field
+     /*   // Add "nom" field
         $this->add([            
             'type'  => 'text',
             'name' => 'nom',
@@ -68,7 +68,7 @@ class ProductEditForm extends Form
                 'value' => 'Valider',
                 'id' => 'submit',
             ],
-        ]);
+        ]);*/
     }
 
     /**
@@ -76,7 +76,7 @@ class ProductEditForm extends Form
      */
     private function addInputFilter() 
     {
-        // Create main input filter
+      /*  // Create main input filter
         $inputFilter = new InputFilter();        
         $this->setInputFilter($inputFilter);
                 
@@ -109,7 +109,7 @@ class ProductEditForm extends Form
                             'name' => 'Digits'
                         ],
                     ],
-                ]);
+                ]);*/
     }
 }
 

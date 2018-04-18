@@ -3,7 +3,6 @@ namespace Application\Services\Factories;
 
 use Interop\Container\ContainerInterface;
 use Application\Services\NavManager;
-use Application\Services\UserprivilegeTable;
 
 /**
  * This is the factory class for NavManager service. The purpose of the factory
@@ -21,6 +20,6 @@ class NavManagerFactory
         $viewHelperManager = $container->get('ViewHelperManager');
         $urlHelper = $viewHelperManager->get('url');
         
-        return new NavManager($authService, $urlHelper, $container->get(UserprivilegeTable::class));
+        return new NavManager($authService, $urlHelper);
     }
 }

@@ -7,7 +7,7 @@ use Zend\Session\SessionManager;
 use Zend\Authentication\Storage\Session as SessionStorage;
 use Interop\Container\ContainerInterface;
 use Zend\Db\Adapter\AdapterInterface;
-use Application\Model\Privilege;
+use Application\Model\Fiche;
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\TableGateway\TableGateway;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
@@ -15,7 +15,7 @@ use Zend\ModuleManager\Feature\ConfigProviderInterface;
 /**
  * The factory responsible for creating of authentication service.
  */
-class PrivilegeTableGatewayFactory implements FactoryInterface
+class FicheTableGatewayFactory implements FactoryInterface
 {
     /**
      * This method creates the Zend\Authentication\AuthenticationService service 
@@ -26,7 +26,7 @@ class PrivilegeTableGatewayFactory implements FactoryInterface
     {
         $dbAdapter = $container->get(AdapterInterface::class);
         $resultSetPrototype = new ResultSet();
-        $resultSetPrototype->setArrayObjectPrototype(new Privilege());
-        return new TableGateway('privilege', $dbAdapter, null, $resultSetPrototype);
+        $resultSetPrototype->setArrayObjectPrototype(new Fiche());
+        return new TableGateway('fiche', $dbAdapter, null, $resultSetPrototype);
     }
 }

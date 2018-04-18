@@ -18,17 +18,14 @@ class NavManager
      * @var Zend\View\Helper\Url
      */
     private $urlHelper;
-
-    private $_tableUserprivilege;
     
     /**
      * Constructs the service.
      */
-    public function __construct($authService, $urlHelper, UserprivilegeTable $tableUserprivilege)
+    public function __construct($authService, $urlHelper)
     {
         $this->authService = $authService;
         $this->urlHelper = $urlHelper;
-        $this->_tableUserprivilege = $tableUserprivilege;
     }
     
     /**
@@ -81,14 +78,6 @@ class NavManager
                 'label' => 'Mon Panier',
                 'link' => $url('panier')
             ];
-
-            if($this->_tableUserprivilege->isAdmin($this->authService->getIdentity()['id'])){
-                $items[] = [
-                    'id' => 'admin',
-                    'label' => 'Administration',
-                    'link' => $url('admin')
-                ];
-            }
         }
         
         return $items;

@@ -1,24 +1,11 @@
-<h1 id='maintitle'>Derniers articles</h1><hr class='bottomSpace line'>
+<h1 id='maintitle'>Galerie</h1><hr class='bottomSpace line'>
 
-<?php if(!empty($productPanier)): ?>
-    <p>Le produit <?= $productPanier->_nom ?> a été ajouté au panier !</p>
-<?php endif ?>
-
-<?php foreach ($products as $p) : ?>
+<?php foreach ($fiches as $f) : ?>
 <div class='row item'>
 
-    <div class='col-sm-2'>
-        <img class= 'imgItem' src="<?= $p->_image ?>">
-    </div>
-
     <div class='col-sm-10 itemTxt'>
-        <h2 class='secontitle'> <?= $p->_nom ?> </h2>
-        <p class='desc'> <?= $p->_description ?> </p><br/>
-        <h class='price'>
-            <?= $p->_prix ?> €
-            <a href="/produit/<?= $p->_id ?>"><button type="button" class=' btn1'>Détail</button></a>
-            <a href="/addpanier/<?= $p->_id ?>?redirectUrl=/?idProductAddToPanier=<?= $p->_id ?>"><button type="button" class=' btn1'><i class='fa fa-shopping-cart iconNav'></i>Ajouter au panier</button></a>
-        </h>
+        <h2 class='secontitle'> <?= $f->_nom ?> </h2>
+        <p class='desc'> <?= $f->_description ?> </p><br/>
     </div>
 </div>
 <?php endforeach; ?>

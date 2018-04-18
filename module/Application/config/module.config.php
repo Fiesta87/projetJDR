@@ -37,114 +37,23 @@ return [
                 ],
             ],
 
-            // affichage d'un produit spécifique
-            'produit' => [
+            // affichage d'une fiche spécifique
+            'fiche' => [
                 'type'    => Segment::class,
                 'options' => [
-                    'route'    => '/produit/:id',
+                    'route'    => '/fiche/:id',
                     'constraints' => [
                         'id' => '[0-9]+',
                     ],
                     'defaults' => [
                         'controller'    => Controller\IndexController::class,
-                        'action'        => 'produit',
-                    ],
-                ],
-            ],
-
-            // affichage de l'historique des achats d'un utilisateur
-            'historique' => [
-                'type'    => Segment::class,
-                'options' => [
-                    'route'    => '/historique',
-                    'defaults' => [
-                        'controller'    => Controller\IndexController::class,
-                        'action'        => 'historique',
-                    ],
-                ],
-            ],
-/*
-            'compte' => [
-                'type'    => Segment::class,
-                'options' => [
-                    'route'    => '/compte',
-                    'defaults' => [
-                        'controller'    => Controller\IndexController::class,
-                        'action'        => 'compte',
-                    ],
-                ],
-            ],*/
-
-            /*  ---------------- PanierController ---------------- */
-
-            // ajoute le produit spécifié par l'URL au panier puis redirige vers la page précédente avec un message de confirmation
-            'addpanier' => [
-                'type'    => Segment::class,
-                'options' => [
-                    'route'    => '/addpanier/:id',
-                    'constraints' => [
-                        'id' => '[0-9]+',
-                    ],
-                    'defaults' => [
-                        'controller'    => Controller\PanierController::class,
-                        'action'        => 'addpanier',
-                    ],
-                ],
-            ],
-
-            // affiche le panier de l'utilisateur
-            'panier' => [
-                'type'    => Segment::class,
-                'options' => [
-                    'route'    => '/panier',
-                    'defaults' => [
-                        'controller'    => Controller\PanierController::class,
-                        'action'        => 'panier',
-                    ],
-                ],
-            ],
-
-            // supprime un produit du panier
-            'removepanier' => [
-                'type'    => Segment::class,
-                'options' => [
-                    'route'    => '/removepanier/:id',
-                    'constraints' => [
-                        'id' => '[0-9]+',
-                    ],
-                    'defaults' => [
-                        'controller'    => Controller\PanierController::class,
-                        'action'        => 'removepanier',
-                    ],
-                ],
-            ],
-
-            // affiche le formulaire de paiement du panier et traite également le retour après la saisie de l'utilisateur
-            'payer' => [
-                'type'    => Segment::class,
-                'options' => [
-                    'route'    => '/payer',
-                    'defaults' => [
-                        'controller'    => Controller\PanierController::class,
-                        'action'        => 'payer',
-                    ],
-                ],
-            ],
-
-            // affiche les informations d'un paiement fructueux
-            'infopaiement' => [
-                'type'    => Segment::class,
-                'options' => [
-                    'route'    => '/infopaiement',
-                    'defaults' => [
-                        'controller'    => Controller\PanierController::class,
-                        'action'        => 'infopaiement',
+                        'action'        => 'fiche',
                     ],
                 ],
             ],
 
             /*  ---------------- AdminController ---------------- */
-
+/*
             // liste les produits du catalogue pour leur management
             'admin' => [
                 'type'    => Segment::class,
@@ -201,9 +110,9 @@ return [
                         'action'        => 'add',
                     ],
                 ],
-            ],
+            ],*/
         ],
-    ],
+    ],/*
     'access_filter' => [
         'options' => [
             'mode' => 'restrictive'
@@ -214,29 +123,20 @@ return [
                 ['actions' => ['edit'], 'allow' => '@']
             ],
         ],
-    ],
+    ],*/
     'service_manager' => [
         'factories' => [
-            Services\ProductTable::class => Services\Factories\ProductTableFactory::class,
-            Services\ProductTableGateway::class => Services\Factories\ProductTableGatewayFactory::class,
-            Services\PanierTable::class => Services\Factories\PanierTableFactory::class,
-            Services\PanierTableGateway::class => Services\Factories\PanierTableGatewayFactory::class,
+            Services\FicheTable::class => Services\Factories\FicheTableFactory::class,
+            Services\FicheTableGateway::class => Services\Factories\FicheTableGatewayFactory::class,
             Services\MetadataTable::class => Services\Factories\MetadataTableFactory::class,
             Services\MetadataTableGateway::class => Services\Factories\MetadataTableGatewayFactory::class,
-            Services\HistoriqueTable::class => Services\Factories\HistoriqueTableFactory::class,
-            Services\HistoriqueTableGateway::class => Services\Factories\HistoriqueTableGatewayFactory::class,
-            Services\UserprivilegeTable::class => Services\Factories\UserprivilegeTableFactory::class,
-            Services\UserprivilegeTableGateway::class => Services\Factories\UserprivilegeTableGatewayFactory::class,
-            Services\PrivilegeTable::class => Services\Factories\PrivilegeTableFactory::class,
-            Services\PrivilegeTableGateway::class => Services\Factories\PrivilegeTableGatewayFactory::class,
             Services\NavManager::class => Services\Factories\NavManagerFactory::class,
          ],
     ],
     'controllers' => [
         'factories' => [
             Controller\IndexController::class => Controller\Factories\IndexControllerFactory::class,
-            Controller\PanierController::class => Controller\Factories\PanierControllerFactory::class,
-            Controller\AdminController::class => Controller\Factories\AdminControllerFactory::class,
+            // Controller\AdminController::class => Controller\Factories\AdminControllerFactory::class,
         ],
     ],
     'view_helpers' => [

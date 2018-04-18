@@ -18,7 +18,7 @@ use Zend\Session\Validator\HttpUserAgent;
 return [
     'db' => [
         'driver' => 'Pdo',
-        'dsn'    => 'mysql:dbname=wesh;host=localhost;charset=utf8;',
+        'dsn'    => 'mysql:dbname=jdr;host=localhost;charset=utf8;',
         'username' => 'root', 
         'password' => '', 
     ],
