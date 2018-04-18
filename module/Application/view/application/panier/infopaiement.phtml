@@ -1,0 +1,14 @@
+<?php
+$this->headTitle('Paiement Réussi');
+?>
+
+<h1 id='maintitle'>Paiement réussi !</h1><hr class='bottomSpace line'>
+
+<p>Identifiant de transaction : <?= $idTransaction ?></p>
+<p>Montant : <?= $prixTotal ?></p>
+<p>Nom du propriétaire de la carte : <?= $data['username'] ?></p>
+<p>Numéro de carte banquaire : <?= $data['card'] ?></p>
+<p>Code de sécurité (CVV) : <?= $data['cvv'] ?></p>
+<p>Date d'expiration : <?= $data['expiration'] ?></p>
+
+<a href="/"><button type="button" class='btn btn-primary btnItemLarge btnSingle' id="bOK">Continuer mes achats</button></a>

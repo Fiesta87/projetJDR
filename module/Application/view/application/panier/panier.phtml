@@ -1,0 +1,33 @@
+<h1 id='maintitle'>Votre panier : </h1><hr class='bottomSpace line'>
+
+<?php if(!empty($productRemove)): ?>
+    <p>Le produit <?= $productRemove->_nom ?> a bien été supprimé du panier.</p>
+<?php endif ?>
+
+<?php if(!empty($products)): ?>
+<div class='row'>
+
+    <div class='col-lg-6'>
+        <?php foreach ($products as $p) : ?>
+            <div class='panierItem'>
+                <img class= 'smImg' src="<?= $p->_image ?>">
+                <span class='panierTitre'><?= $p->_nom ?></span>
+                <span class='panierPrice'><?= $p->_prix ?> €</span>
+
+                <div class='blockButtonPanierBtn'>
+                    <a href="/produit/<?= $p->_id ?>"><button type="button">Détail</button></a>
+                    <a href="/removepanier/<?= $p->_id ?>?idProductRemoveFromPanier=<?= $p->_id ?>"><button type="button">Supprimer du Panier</button></a>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    </div>
+    <div class='col-lg-6 payingBlock'>
+        <h2>Prix hors taxe : <?= $prixHT ?> €</h2>
+        <h2>Taxe : <?= $taxe ?> %</h2>
+        <h2>Prix TTC : <?= $prixTTC ?> €</h2>
+        <a href="/payer"><button type="button">Payer</button></a>
+    </div>
+</div>
+<?php else: ?>
+    <h2>Votre panier est vide !</h2>
+<?php endif ?>
