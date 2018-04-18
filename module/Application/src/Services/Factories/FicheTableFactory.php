@@ -10,6 +10,7 @@ use Application\Services\FicheTableGateway;
 use Application\Services\FicheTable;
 use Application\Services\MetadataTable;
 use Application\Services\AttributTable;
+use User\Services\UserManager;
 
 
 /**
@@ -25,7 +26,7 @@ class FicheTableFactory implements FactoryInterface
                     $requestedName, array $options = null)
     {
         $tableGateway = $container->get(FicheTableGateway::class);
-    $table = new FicheTable($tableGateway, $container->get(MetadataTable::class), $container->get(AttributTable::class));
+    $table = new FicheTable($tableGateway, $container->get(MetadataTable::class), $container->get(AttributTable::class), $container->get(UserManager::class));
         return $table;
     }
 }

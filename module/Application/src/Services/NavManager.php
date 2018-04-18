@@ -38,7 +38,7 @@ class NavManager
         
         $items[] = [
             'id' => 'home',
-            'label' => 'Catalogue',
+            'label' => 'Galerie',
             'link'  => $url('index')
         ];
         
