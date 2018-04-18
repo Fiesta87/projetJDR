@@ -128,6 +128,8 @@ return [
         'factories' => [
             Services\FicheTable::class => Services\Factories\FicheTableFactory::class,
             Services\FicheTableGateway::class => Services\Factories\FicheTableGatewayFactory::class,
+            Services\AttributTable::class => Services\Factories\AttributTableFactory::class,
+            Services\AttributTableGateway::class => Services\Factories\AttributTableGatewayFactory::class,
             Services\MetadataTable::class => Services\Factories\MetadataTableFactory::class,
             Services\MetadataTableGateway::class => Services\Factories\MetadataTableGatewayFactory::class,
             Services\NavManager::class => Services\Factories\NavManagerFactory::class,
