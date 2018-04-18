@@ -15,11 +15,13 @@ class FicheTable {
         $this->_tableMetadata = $tableMetadata;
     }
 
-    public function getAttributOfFiche($idFiche) { 
-        $resultSet = $this->_tableGateway->select(); 
+    public function getAttributsOfFiche($idFiche) { 
+        $resultSet = $this->_tableGateway->select(['idFiche' => $idFiche, 'idAttributParent' => -1]);
         $return = array();
-        foreach( $resultSet as $r )
+        foreach( $resultSet as $r ){
+            $r->_sousAttributs = findChildrenOf($r->_id);
             $return[]=$r;
+        }
         return $return; 
     }
 
@@ -29,6 +31,16 @@ class FicheTable {
 
     public function find($id){
         return $this->_tableGateway->select(['id' => $id])->current();
+    }
+
+    public function findChildrenOf($idAttributParent){
+        $resultSet = $this->_tableGateway->select(['idAttributParent' => $idAttributParent]);
+        $return = array();
+        foreach( $resultSet as $r ){
+            $r->_sousAttributs = findChildrenOf($r->_id);
+            $return[]=$r;
+        }
+        return $return;
     }
 
     public function delete(Attribut $toDelete){

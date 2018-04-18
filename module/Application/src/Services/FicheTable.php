@@ -5,19 +5,28 @@ use Zend\Db\TableGateway\TableGatewayInterface;
 use Zend\Db\Sql\Select;
 use Application\Model\Fiche;
 use Application\Services\MetadataTable;
+use Application\Services\AttributTable;
 
 class FicheTable {
     protected $_tableGateway;
     private $_tableMetadata;
+    private $_tableAttribut;
 
     private $offset;
     private $nbFicheParPage;
 
-    public function __construct(TableGatewayInterface $tableGateway, MetadataTable $tableMetadata){
+    public function __construct(TableGatewayInterface $tableGateway, MetadataTable $tableMetadata, AttributTable $tableAttribut){
         $this->_tableGateway = $tableGateway;
         $this->_tableMetadata = $tableMetadata;
+        $this->_tableAttribut = $tableAttribut;
     }
 
+
+    /**
+     * Retourne la liste des fiches d'une page de la galerie.
+     * Les fiches retournées n'ont pas leur listes des attributs initialisé.
+     * Utilisez la méthode find pour récupérer une fiche compléte.
+     */
     public function fetchPage($page) {
 
         // on récupère le nombre d'article par page spécifié dans la BD (Metadata)
@@ -40,8 +49,15 @@ class FicheTable {
         $this->_tableGateway->insert($f->toValues());
     }
 
+    /**
+     * Retourne un fiche avec ses attributs
+     */
     public function find($id){
-        return $this->_tableGateway->select(['id' => $id])->current();
+        $f = $this->_tableGateway->select(['id' => $id])->current();
+
+        $f->_attributs = $this->_tableAttribut->getAttributsOfFiche($f->_id);
+
+        return $f;
     }
 
     public function delete(Fiche $toDelete){

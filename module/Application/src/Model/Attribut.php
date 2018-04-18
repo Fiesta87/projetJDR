@@ -7,6 +7,7 @@ class Attribut {
     public $_idAttributParent;
     public $_nom;
     public $_valeur;
+    public $_sousAttributs;
 
     public function __construct(){
 

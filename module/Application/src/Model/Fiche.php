@@ -5,6 +5,7 @@ class Fiche {
     public $_id;
     public $_nom;
     public $_description;
+    public $_attributs;
 
     public function __construct(){
 
