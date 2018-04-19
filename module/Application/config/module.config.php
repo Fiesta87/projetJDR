@@ -64,6 +64,36 @@ return [
                 ],
             ],
 
+            // ajout aux favoris
+            'addfavoris' => [
+                'type'    => Segment::class,
+                'options' => [
+                    'route'    => '/addfavoris/:id',
+                    'constraints' => [
+                        'id' => '[0-9]+',
+                    ],
+                    'defaults' => [
+                        'controller'    => Controller\IndexController::class,
+                        'action'        => 'addfavoris',
+                    ],
+                ],
+            ],
+
+            // suppression des favoris
+            'removefavoris' => [
+                'type'    => Segment::class,
+                'options' => [
+                    'route'    => '/removefavoris/:id',
+                    'constraints' => [
+                        'id' => '[0-9]+',
+                    ],
+                    'defaults' => [
+                        'controller'    => Controller\IndexController::class,
+                        'action'        => 'removefavoris',
+                    ],
+                ],
+            ],
+
             /*  ---------------- AdminController ---------------- */
 
             // liste les produits du catalogue pour leur management

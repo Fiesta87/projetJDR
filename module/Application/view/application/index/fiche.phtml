@@ -1,14 +1,33 @@
 <h1 id='maintitle'><?= $fiche->_nom ?></h1><hr class='bottomSpace line'>
 
+<?php if($fav == 1): ?>
+<p><?= $fiche->_nom ?> a bien été ajoutée à vos favoris !</p>
+<?php endif ?>
+
+<?php if($fav == 2): ?>
+<p><?= $fiche->_nom ?> a bien été supprimée de vos favoris.</p>
+<?php endif ?>
+
+<?php if($boutonFavorisActif): ?>
+<a href="/addfavoris/<?= $fiche->_id ?>"><button type="button" class='btn btn-primary btn1'>Ajouter à mes favoris</button></a>
+<?php else: ?>
+<a href="/removefavoris/<?= $fiche->_id ?>"><button type="button" class='btn btn-primary btn1'>Supprimer de mes favoris</button></a>
+<?php endif ?>
+
 <h2 class='secontitle titleUp'>Description</h2>
 <p><?= $fiche->_description ?></p>
 <h2 class='secontitle titleUp'>Attributs</h2>
 
-<?php foreach ($fiche->_attributs as $a) : ?>
+<?php foreach ($fiche->_attributs as $a1) : ?>
 <div class='row item'>
 
     <div class='col-sm-2'>
-        <h3 class='secontitle'><?= $a->_nom ?></h3>
+        <h3 class='secontitle'><?= $a1->_nom ?></h3>
+
+        <?php foreach ($a1->_sousAttributs as $a2) : ?>
+
+            <p><?= $a2->_nom ?></p>
+        <?php endforeach; ?>
     </div>
 </div>
 <?php endforeach; ?>

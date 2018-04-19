@@ -27,16 +27,16 @@ class FavorisTable {
         return $return;
     }
 
-    public function insert(Attribut $a){
-        $this->_tableGateway->insert($a->toValues());
+    public function insert(Favoris $f){
+        $this->_tableGateway->insert($f->toValues());
     }
 
-    public function find($id){
-        return $this->_tableGateway->select(['id' => $id])->current();
+    public function isInFavorisOfUser($idFiche, $idUser){
+        return $this->_tableGateway->select(['idFiche' => $idFiche, 'idUser' => $idUser])->current() != null;
     }
 
-    public function delete(Attribut $toDelete){
-        return $this->_tableGateway->delete(['id' => $toDelete->_id]);
+    public function delete(Favoris $toDelete){
+        return $this->_tableGateway->delete(['idUser' => $toDelete->_idUser, 'idFiche' => $toDelete->_idFiche]);
     }
 }
 ?>
