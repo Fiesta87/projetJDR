@@ -52,24 +52,32 @@ return [
                 ],
             ],
 
-            /*  ---------------- AdminController ---------------- */
-/*
-            // liste les produits du catalogue pour leur management
-            'admin' => [
+            // favoris
+            'favoris' => [
                 'type'    => Segment::class,
                 'options' => [
-                    'route'    => '/admin[/:page]',
-                    'constraints' => [
-                        'page' => '[0-9]+',
-                    ],
+                    'route'    => '/favoris',
                     'defaults' => [
-                        'controller'    => Controller\AdminController::class,
-                        'action'        => 'admin',
-                        'page'        => 1,
+                        'controller'    => Controller\IndexController::class,
+                        'action'        => 'favoris',
                     ],
                 ],
             ],
 
+            /*  ---------------- AdminController ---------------- */
+
+            // liste les produits du catalogue pour leur management
+            'admin' => [
+                'type'    => Segment::class,
+                'options' => [
+                    'route'    => '/admin',
+                    'defaults' => [
+                        'controller'    => Controller\AdminController::class,
+                        'action'        => 'admin',
+                    ],
+                ],
+            ],
+/*
             // supprime un produit
             'delete' => [
                 'type'    => Segment::class,
@@ -83,24 +91,24 @@ return [
                         'action'        => 'delete',
                     ],
                 ],
-            ],
+            ],*/
 
-            // modifit un produit
-            'edit' => [
+            // modifit une fiche
+            'editfiche' => [
                 'type'    => Segment::class,
                 'options' => [
-                    'route'    => '/edit/:id',
+                    'route'    => '/editfiche/:id',
                     'constraints' => [
                         'id' => '[0-9]+',
                     ],
                     'defaults' => [
                         'controller'    => Controller\AdminController::class,
-                        'action'        => 'edit',
+                        'action'        => 'editfiche',
                     ],
                 ],
             ],
 
-            // ajoute un produit
+            // ajoute une fiche
             'add' => [
                 'type'    => Segment::class,
                 'options' => [
@@ -110,7 +118,7 @@ return [
                         'action'        => 'add',
                     ],
                 ],
-            ],*/
+            ],
         ],
     ],/*
     'access_filter' => [
@@ -132,13 +140,15 @@ return [
             Services\AttributTableGateway::class => Services\Factories\AttributTableGatewayFactory::class,
             Services\MetadataTable::class => Services\Factories\MetadataTableFactory::class,
             Services\MetadataTableGateway::class => Services\Factories\MetadataTableGatewayFactory::class,
+            Services\FavorisTable::class => Services\Factories\FavorisTableFactory::class,
+            Services\FavorisTableGateway::class => Services\Factories\FavorisTableGatewayFactory::class,
             Services\NavManager::class => Services\Factories\NavManagerFactory::class,
          ],
     ],
     'controllers' => [
         'factories' => [
             Controller\IndexController::class => Controller\Factories\IndexControllerFactory::class,
-            // Controller\AdminController::class => Controller\Factories\AdminControllerFactory::class,
+            Controller\AdminController::class => Controller\Factories\AdminControllerFactory::class,
         ],
     ],
     'view_helpers' => [

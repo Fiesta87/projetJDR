@@ -16,7 +16,7 @@ class AttributTable {
         $resultSet = $this->_tableGateway->select(['idFiche' => $idFiche, 'idAttributParent' => -1]);
         $return = array();
         foreach( $resultSet as $r ){
-            $r->_sousAttributs = findChildrenOf($r->_id);
+            $r->_sousAttributs = $this->findChildrenOf($r->_id);
             $return[]=$r;
         }
         return $return; 
@@ -34,7 +34,7 @@ class AttributTable {
         $resultSet = $this->_tableGateway->select(['idAttributParent' => $idAttributParent]);
         $return = array();
         foreach( $resultSet as $r ){
-            $r->_sousAttributs = findChildrenOf($r->_id);
+            $r->_sousAttributs = $this->findChildrenOf($r->_id);
             $return[]=$r;
         }
         return $return;

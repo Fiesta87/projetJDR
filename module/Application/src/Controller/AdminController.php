@@ -3,15 +3,11 @@ namespace Application\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\JsonModel;
-use Application\Model\Product;
-use Application\Services\ProductTable;
+use Application\Model\Fiche;
+use Application\Services\FicheTable;
 use Application\Model\Metadata;
 use Application\Services\MetadataTable;
-use Application\Model\Panier;
-use Application\Services\PanierTable;
-use Application\Model\Historique;
-use Application\Services\HistoriqueTable;
-use Application\Form\ProductEditForm;
+// use Application\Form\ProductEditForm;
 use Zend\View\Model\ViewModel;
 use User\Services\AuthManager;
 use Zend\Uri\UriFactory;
@@ -20,49 +16,38 @@ use Zend\Mvc\Controller\Plugin\Forward;
 class AdminController extends AbstractActionController
 {
     private $_authManager;
-    private $_tableProduct;
+    private $_tableFiche;
     private $_tableMetadata;
-    private $_tablePanier;
-    private $_tableHistorique;
 
-    public function __construct(AuthManager $authManager, ProductTable $tableProduct, MetadataTable $tableMetadata, PanierTable $tablePanier, HistoriqueTable $tableHistorique)
+    public function __construct(AuthManager $authManager, FicheTable $tableFiche, MetadataTable $tableMetadata)
     {
         $this->_authManager = $authManager;
-        $this->_tableProduct = $tableProduct;
+        $this->_tableFiche = $tableFiche;
         $this->_tableMetadata = $tableMetadata;
-        $this->_tablePanier = $tablePanier;
-        $this->_tableHistorique = $tableHistorique;
     }
 
     // liste les produits du catalogue pour leur management
     public function adminAction() {
 
-        $page = (int)$this->params()->fromRoute('page', -1);
-
         // si on vient sur cette page après avoir ajouté/modifié/supprimé un article,
         // on récupère son nom pour réaliser un affichage de confirmation
 
-        $nameProductDeleted = (string)$this->params()->fromQuery('nameProductDeleted', '');
+        // $nameProductDeleted = (string)$this->params()->fromQuery('nameProductDeleted', '');
 
-        $nameProductAdded = (string)$this->params()->fromQuery('nameProductAdded', '');
+        // $nameProductAdded = (string)$this->params()->fromQuery('nameProductAdded', '');
 
-        $nameProductModified = (string)$this->params()->fromQuery('nameProductModified', '');
+        // $nameProductModified = (string)$this->params()->fromQuery('nameProductModified', '');
 
         // les pages commencent à 1
-        $pagePrecedente = max($page-1, 1);
-        $pageSuivante = $page+1;
 
         return new ViewModel([
-            'products' => $this->_tableProduct->fetchPage($page),
-            'page' => $page,
-            'pagePrecedente' => $pagePrecedente,
-            'pageSuivante' => $pageSuivante,
-            'nameProductDeleted' => $nameProductDeleted,
-            'nameProductAdded' => $nameProductAdded,
-            'nameProductModified' => $nameProductModified,
+            'fiches' => $this->_tableFiche->getFichesOfUser($this->_authManager->getUserData()['id']),
+            // 'nameProductDeleted' => $nameProductDeleted,
+            // 'nameProductAdded' => $nameProductAdded,
+            // 'nameProductModified' => $nameProductModified,
         ]);
     }
-
+/*
     // supprime un produit
     public function deleteAction() {
 
@@ -100,8 +85,8 @@ class AdminController extends AbstractActionController
         }
     }
     
-    // modifit un produit
-    public function editAction() {
+    // modifit une fiche
+    public function editficheAction() {
 
         $id = (int)$this->params()->fromRoute('id', -1);
 
@@ -242,7 +227,7 @@ class AdminController extends AbstractActionController
                 'error' => false,
             ));
         }
-    }
+    }*/
 }
 
 ?>

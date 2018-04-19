@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  mer. 18 avr. 2018 à 22:48
+-- Généré le :  jeu. 19 avr. 2018 à 03:27
 -- Version du serveur :  5.7.19
 -- Version de PHP :  7.1.9
 
@@ -53,6 +53,25 @@ INSERT INTO `attribut` (`id`, `idFiche`, `idAttributParent`, `nom`, `valeur`) VA
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `favoris`
+--
+
+DROP TABLE IF EXISTS `favoris`;
+CREATE TABLE IF NOT EXISTS `favoris` (
+  `idUser` int(11) NOT NULL,
+  `idFiche` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `favoris`
+--
+
+INSERT INTO `favoris` (`idUser`, `idFiche`) VALUES
+(2, 2);
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `fiche`
 --
 
@@ -63,14 +82,15 @@ CREATE TABLE IF NOT EXISTS `fiche` (
   `description` varchar(500) NOT NULL,
   `idUser` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `fiche`
 --
 
 INSERT INTO `fiche` (`id`, `nom`, `description`, `idUser`) VALUES
-(1, 'fiche de test', 'Ut lacinia diam ut eros pulvinar lobortis. Vivamus quam libero, pellentesque sit amet nunc a, ornare facilisis nisl. Suspendisse potenti. Cras arcu augue, maximus non ligula non, sodales ornare ex. Ut iaculis pellentesque turpis. Nullam maximus nibh eu nisi rutrum, id mollis felis mattis. Sed faucibus eget turpis sed accumsan. Aenean finibus pellentesque euismod.', 1);
+(1, 'fiche de test', 'Ut lacinia diam ut eros pulvinar lobortis. Vivamus quam libero, pellentesque sit amet nunc a, ornare facilisis nisl. Suspendisse potenti. Cras arcu augue, maximus non ligula non, sodales ornare ex. Ut iaculis pellentesque turpis. Nullam maximus nibh eu nisi rutrum, id mollis felis mattis. Sed faucibus eget turpis sed accumsan. Aenean finibus pellentesque euismod.', 1),
+(2, 'Ma deuxième fiche', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eros ex, tristique sit amet arcu eget, ornare mattis mi. Donec sagittis scelerisque erat, at tristique enim auctor ut. Sed tempus gravida quam, in varius massa consectetur eget. Sed faucibus venenatis metus, et vestibulum metus faucibus et. Aenean eu mi dapibus, rhoncus lorem non, posuere odio. Duis congue ex et tellus feugiat condimentum. Aenean volutpat eros vel libero maximus hendrerit.', 1);
 
 -- --------------------------------------------------------
 
@@ -107,14 +127,15 @@ CREATE TABLE IF NOT EXISTS `user` (
   `password` varchar(200) NOT NULL,
   `salt` varchar(200) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `user`
 --
 
 INSERT INTO `user` (`id`, `username`, `email`, `password`, `salt`) VALUES
-(1, 'dupond', 'dupond@gmail.com', '05115fbd1dabdf649dc21df4f4e108402db89406185f49133f4fcd6ca616892b6757ee913dfa165c4981ca05284c637321dc1edf1b66bca6fa3b6893fa238b50', 'lul');
+(1, 'dupond', 'dupond@gmail.com', '05115fbd1dabdf649dc21df4f4e108402db89406185f49133f4fcd6ca616892b6757ee913dfa165c4981ca05284c637321dc1edf1b66bca6fa3b6893fa238b50', 'lul'),
+(2, 'martin', 'martin@gmail.com', '8cfcc6165ef46edacff1e82317858b15af9cd42b300969407dd239b5dcac16b87b1ad94583bf73aea30e65ee6da6723cdee81467277f1e74e848c217d90c702f', 'sombra');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

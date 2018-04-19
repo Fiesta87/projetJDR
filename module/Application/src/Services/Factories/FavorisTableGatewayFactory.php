@@ -1,21 +1,21 @@
 <?php
-namespace Application\Controller\Factories;
+namespace Application\Services\Factories;
 
 use Zend\Authentication\AuthenticationService;
 use Zend\ServiceManager\Factory\FactoryInterface;
 use Zend\Session\SessionManager;
 use Zend\Authentication\Storage\Session as SessionStorage;
-use User\Service\AuthAdapter;
-use User\Services\AuthManager;
 use Interop\Container\ContainerInterface;
-use Application\Controller\AdminController;
-use Application\Services\FicheTable;
-use Application\Services\MetadataTable;
+use Zend\Db\Adapter\AdapterInterface;
+use Application\Model\Favoris;
+use Zend\Db\ResultSet\ResultSet;
+use Zend\Db\TableGateway\TableGateway;
+use Zend\ModuleManager\Feature\ConfigProviderInterface;
 
 /**
  * The factory responsible for creating of authentication service.
  */
-class AdminControllerFactory implements FactoryInterface
+class FavorisTableGatewayFactory implements FactoryInterface
 {
     /**
      * This method creates the Zend\Authentication\AuthenticationService service 
@@ -24,10 +24,9 @@ class AdminControllerFactory implements FactoryInterface
     public function __invoke(ContainerInterface $container, 
                     $requestedName, array $options = null)
     {
-        return new AdminController(
-            $container->get(AuthManager::class),
-            $container->get(FicheTable::class),
-            $container->get(MetadataTable::class)
-        );
+        $dbAdapter = $container->get(AdapterInterface::class);
+        $resultSetPrototype = new ResultSet();
+        $resultSetPrototype->setArrayObjectPrototype(new Favoris());
+        return new TableGateway('favoris', $dbAdapter, null, $resultSetPrototype);
     }
 }

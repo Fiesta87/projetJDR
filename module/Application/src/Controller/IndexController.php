@@ -7,6 +7,7 @@ use Application\Model\Fiche;
 use Application\Services\FicheTable;
 use Application\Model\Metadata;
 use Application\Services\MetadataTable;
+use Application\Services\FavorisTable;
 use Zend\View\Model\ViewModel;
 use User\Services\AuthManager;
 use Zend\Uri\UriFactory;
@@ -16,12 +17,14 @@ class IndexController extends AbstractActionController
     private $_authManager;
     private $_tableFiche;
     private $_tableMetadata;
+    private $_tableFavoris;
 
-    public function __construct(AuthManager $authManager, FicheTable $tableFiche, MetadataTable $tableMetadata)
+    public function __construct(AuthManager $authManager, FicheTable $tableFiche, MetadataTable $tableMetadata, FavorisTable $tableFavoris)
     {
         $this->_authManager = $authManager;
         $this->_tableFiche = $tableFiche;
         $this->_tableMetadata = $tableMetadata;
+        $this->_tableFavoris = $tableFavoris;
     }
 
     // liste des fiche de la galerie
@@ -48,6 +51,16 @@ class IndexController extends AbstractActionController
 
         return new ViewModel([
             'fiche' => $this->_tableFiche->find($id),
+        ]);
+    }
+
+    //favoris
+    public function favorisAction() {
+
+        $idUser = $this->_authManager->getUserData()['id'];
+
+        return new ViewModel([
+            'fiches' => $this->_tableFavoris->getFichesFavorisOfUser($idUser),
         ]);
     }
 }

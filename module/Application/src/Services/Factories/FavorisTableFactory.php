@@ -1,21 +1,20 @@
 <?php
-namespace Application\Controller\Factories;
+namespace Application\Services\Factories;
 
 use Zend\Authentication\AuthenticationService;
 use Zend\ServiceManager\Factory\FactoryInterface;
 use Zend\Session\SessionManager;
 use Zend\Authentication\Storage\Session as SessionStorage;
-use User\Service\AuthAdapter;
-use User\Services\AuthManager;
 use Interop\Container\ContainerInterface;
-use Application\Controller\AdminController;
+use Application\Services\FavorisTableGateway;
+use Application\Services\FavorisTable;
 use Application\Services\FicheTable;
-use Application\Services\MetadataTable;
+
 
 /**
  * The factory responsible for creating of authentication service.
  */
-class AdminControllerFactory implements FactoryInterface
+class FavorisTableFactory implements FactoryInterface
 {
     /**
      * This method creates the Zend\Authentication\AuthenticationService service 
@@ -24,10 +23,8 @@ class AdminControllerFactory implements FactoryInterface
     public function __invoke(ContainerInterface $container, 
                     $requestedName, array $options = null)
     {
-        return new AdminController(
-            $container->get(AuthManager::class),
-            $container->get(FicheTable::class),
-            $container->get(MetadataTable::class)
-        );
+        $tableGateway = $container->get(FavorisTableGateway::class);
+    $table = new FavorisTable($tableGateway, $container->get(FicheTable::class));
+        return $table;
     }
 }

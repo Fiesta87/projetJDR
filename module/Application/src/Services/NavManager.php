@@ -61,11 +61,6 @@ class NavManager
                         'link' => $url('logout')
                     ],
                     [
-                        'id' => 'historique',
-                        'label' => 'Historique des achats',
-                        'link' => $url('historique')
-                    ],
-                    [
                         'id' => 'compte',
                         'label' => 'Mon compte',
                         'link' => $url('compte')
@@ -74,9 +69,15 @@ class NavManager
             ];
 
             $items[] = [
-                'id' => 'panier',
-                'label' => 'Mon Panier',
-                'link' => $url('panier')
+                'id' => 'admin',
+                'label' => 'Mes Fiches',
+                'link' => $url('admin')
+            ];
+
+            $items[] = [
+                'id' => 'favoris',
+                'label' => 'Mes Favoris',
+                'link' => $url('favoris')
             ];
         }
         

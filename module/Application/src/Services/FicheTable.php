@@ -70,6 +70,17 @@ class FicheTable {
     }
 
     /**
+     * Retourne une fiche sans ses attributs
+     */
+    public function findNoAttribut($id){
+        $f = $this->_tableGateway->select(['id' => $id])->current();
+
+        $f->_userName = $this->_tableUser->getNameOfUser($f->_idUser);
+
+        return $f;
+    }
+
+    /**
      * Retourne toutes les fiches sans leur attributs d'un utilisateur
      */
     public function getFichesOfUser($idUser){

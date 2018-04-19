@@ -11,6 +11,7 @@ use Interop\Container\ContainerInterface;
 use Application\Controller\IndexController;
 use Application\Services\FicheTable;
 use Application\Services\MetadataTable;
+use Application\Services\FavorisTable;
 
 /**
  * The factory responsible for creating of authentication service.
@@ -27,7 +28,8 @@ class IndexControllerFactory implements FactoryInterface
         return new IndexController(
             $container->get(AuthManager::class),
             $container->get(FicheTable::class),
-            $container->get(MetadataTable::class)
+            $container->get(MetadataTable::class),
+            $container->get(FavorisTable::class)
         );
     }
 }

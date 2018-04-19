@@ -1,6 +1,6 @@
-<h1 id='maintitle'>Administration des articles</h1><hr class='bottomSpace line'>
+<h1 id='maintitle'>Mes fiches</h1><hr class='bottomSpace line'>
 
-<?php if(!empty($nameProductDeleted)): ?>
+<!-- <?php if(!empty($nameProductDeleted)): ?>
     <p>Le produit <?= $nameProductDeleted ?> a bien été supprimé.</p>
 <?php endif ?>
 
@@ -10,34 +10,25 @@
 
 <?php if(!empty($nameProductModified)): ?>
     <p>Le produit <?= $nameProductModified ?> a bien été modifié.</p>
-<?php endif ?>
+<?php endif ?> -->
 
-<a href="/add"><button type="button" class='btn btn-primary btn1'>Ajouter un produit</button></a>
+<a href="/add"><button type="button" class='btn btn-primary btn1'>Ajouter une fiche</button></a>
 
-<?php foreach ($products as $p) : ?>
-<div class='row item'>
+<?php if(!empty($fiches)): ?>
+<?php foreach ($fiches as $f) : ?>
+<a href="/editfiche/<?= $f->_id ?>"><div class='row item'>
 
     <div class='col-sm-2'>
-        <img class= 'imgItem' src="<?= $p->_image ?>">
+        <h2 class='secontitle'><?= $f->_nom ?></h2>
     </div>
 
     <div class='col-sm-10 itemTxt'>
-        <h2 class='secontitle'> <?= $p->_nom ?> </h2>
-        <span class='desc'> <?= $p->_description ?> </span><br/>
-        <span class='price'>
-            <?= $p->_prix ?> €
-            <a href="/delete/<?= $p->_id ?>?page=<?= $page ?>"><button type="button" class='btn btn-primary btn1'>Supprimer</button></a>
-            <a href="/edit/<?= $p->_id ?>"><button type="button" class='btn btn-primary btn1'>&Eacute;diter</button></a>
-        </span>
+        <p class='desc'> <?= $f->_description ?> </p><br/>
     </div>
-</div>
+    <a href="/delete/<?= $p->_id ?>?page=<?= $page ?>"><button type="button" class='btn btn-primary btn1'>Supprimer</button></a>
+    <a href="/edit/<?= $p->_id ?>"><button type="button" class='btn btn-primary btn1'>&Eacute;diter</button></a>
+</div></a>
 <?php endforeach; ?>
-
-<div class='btn-group pageGroup'>
-
-    <?php if($page != $pagePrecedente): ?>
-    <a href="/admin/<?= $pagePrecedente ?>"><button *ngIf="numPage!=1" type="button" class='btn1' id="pagePrecedente">Page précédente</button></a>
-    <?php endif ?>
-    <button type="button" class='btn1'><?= $page ?></button>
-    <a href="/admin/<?= $pageSuivante ?>"><button *ngIf="numPage!=pageMax" type="button" class='btn1' id="pageSuivante">Page suivante</button></a>
-</div>
+<?php else: ?>
+    <h2>Vous n'avez créé aucune fiche pour l'instant !</h2>
+<?php endif ?>
