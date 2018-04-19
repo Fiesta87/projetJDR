@@ -1,5 +1,6 @@
 <h1 id='maintitle'>Mes favoris</h1><hr class='bottomSpace line'>
 
+<?php if(!empty($fiches)): ?>
 <?php foreach ($fiches as $f) : ?>
 <a href="/fiche/<?= $f->_id ?>"><div class='row item'>
 
@@ -13,3 +14,6 @@
     </div>
 </div></a>
 <?php endforeach; ?>
+<?php else: ?>
+    <h2>Vous n'avez aucune fiche dans vos favoris !</h2>
+<?php endif ?>
