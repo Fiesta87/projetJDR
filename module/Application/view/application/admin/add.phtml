@@ -3,7 +3,8 @@ $this->headTitle('Ajout');
 
 $form->get('nom')->setAttributes([
     'class'=>'form-control', 
-    'placeholder'=>'Nom de la fiche'
+    'placeholder'=>'Nom de la fiche',
+    'autofocus' => true
     ]);
 
 $form->get('description')->setAttributes([

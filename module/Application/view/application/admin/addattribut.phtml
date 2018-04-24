@@ -3,7 +3,8 @@ $this->headTitle("Ajout d'un attribut");
 
 $form->get('nom')->setAttributes([
     'class'=>'form-control', 
-    'placeholder'=>"Nom de l'attribut"
+    'placeholder'=>"Nom de l'attribut",
+    'autofocus' => true
     ]);
 
 $form->get('submit')

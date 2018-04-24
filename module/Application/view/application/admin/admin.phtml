@@ -1,8 +1,8 @@
 <h1 id='maintitle'>Mes fiches</h1><hr class='bottomSpace line'>
 
-<!-- <?php if(!empty($nameProductDeleted)): ?>
-    <p>Le produit <?= $nameProductDeleted ?> a bien été supprimé.</p>
-    <?php endif ?> -->
+<?php if(!empty($deleted)): ?>
+    <p>La fiche <?= $deleted ?> a bien été supprimé.</p>
+<?php endif ?>
 
 <a href="/add"><button type="button" class='btn btn-primary btn1'>Ajouter une fiche</button></a>
 
@@ -17,7 +17,7 @@
     <div class='col-sm-10 itemTxt'>
         <p class='desc'> <?= $f->_description ?> </p><br/>
     </div>
-    <a href="/delete/<?= $f->_id ?>?page=<?= $page ?>"><button type="button" class='btn btn-primary btn1'>Supprimer</button></a>
+    <a href="/delete/<?= $f->_id ?>"><button type="button" class='btn btn-primary btn1'>Supprimer</button></a>
 </div></a>
 <?php endforeach; ?>
 <?php else: ?>

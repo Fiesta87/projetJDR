@@ -3,7 +3,8 @@ $this->headTitle('Modification');
 
 $form->get('nom')->setAttributes([
     'class'=>'form-control', 
-    'placeholder'=>'Nom de la fiche'
+    'placeholder'=>'Nom de la fiche',
+    'autofocus' => true
     ]);
 
 $form->get('description')->setAttributes([
@@ -30,6 +31,10 @@ $form->prepare();
 
 <?php endif ?>
 
+<?php if(!empty($deleted)): ?>
+    <p>L'attribut <?= $deleted ?> a bien été supprimé.</p>
+<?php endif ?>
+
 <h1>Modification de la fiche : <?= $fiche->_nom ?></h1>
 
 <form class="form-edit" method="post">
@@ -48,13 +53,13 @@ $form->prepare();
 <div class='row item'>
 
     <div class='col-sm-2'>
-        <h3 class='secontitle'><?= $a1->_nom ?></h3>
+        <h3 class='secontitle'><?= $a1->_nom ?><a href="/editfiche/<?= $fiche->_id ?>/deleteattribut/<?= $a1->_id ?>"><button type="button" class='btn btn-primary btn1'>Supprimer</button></a></h3>
 
         <a href="/editfiche/<?= $fiche->_id ?>/addattribut/<?= $a1->_id ?>"><button type="button" class='btn btn-primary btn1'>Ajouter un sous-attribut à l'attribut <?= $a1->_nom ?></button></a>
 
         <?php foreach ($a1->_sousAttributs as $a2) : ?>
 
-            <p><?= $a2->_nom ?></p>
+            <p><?= $a2->_nom ?><a href="/editfiche/<?= $fiche->_id ?>/deleteattribut/<?= $a2->_id ?>"><button type="button" class='btn btn-primary btn1'>Supprimer</button></a></p>
         <?php endforeach; ?>
     </div>
 </div>

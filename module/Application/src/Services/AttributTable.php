@@ -40,12 +40,28 @@ class AttributTable {
         return $return;
     }
 
-    public function delete(Attribut $toDelete){
-        return $this->_tableGateway->delete(['id' => $toDelete->_id]);
-    }
-
     public function update(Attribut $toUpdate, $data){
         return $this->_tableGateway->update($data,['id' => $toUpdate->_id]);
+    }
+
+    public function deleteAllAttributsOfFiche($idFiche){
+
+        $resultSet = $this->_tableGateway->select(['idFiche' => $idFiche]);
+
+        foreach( $resultSet as $r ){
+            $this->_tableGateway->delete(['id' => $r->_id]);
+        }
+    }
+
+    public function deleteAttributAndHisSousAttributs($idAttributToDelete){
+
+        $resultSet = $this->_tableGateway->select(['idAttributParent' => $idAttributToDelete]);
+
+        foreach( $resultSet as $r ){
+            $this->deleteAttributAndHisSousAttributs($r->_id);
+        }
+
+        $this->_tableGateway->delete(['id' => $idAttributToDelete]);
     }
 }
 ?>

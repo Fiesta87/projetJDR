@@ -9,6 +9,7 @@ use Application\Services\FicheTable;
 use Application\Services\AttributTable;
 use Application\Model\Metadata;
 use Application\Services\MetadataTable;
+use Application\Services\FavorisTable;
 use Application\Form\FicheAddForm;
 use Application\Form\AttributAddForm;
 use Zend\View\Model\ViewModel;
@@ -22,53 +23,51 @@ class AdminController extends AbstractActionController
     private $_tableFiche;
     private $_tableMetadata;
     private $_tableAttribut;
+    private $_tableFavoris;
 
-    public function __construct(AuthManager $authManager, FicheTable $tableFiche, MetadataTable $tableMetadata, AttributTable $tableAttribut)
+    public function __construct(AuthManager $authManager, FicheTable $tableFiche, MetadataTable $tableMetadata, AttributTable $tableAttribut, FavorisTable $tableFavoris)
     {
         $this->_authManager = $authManager;
         $this->_tableFiche = $tableFiche;
         $this->_tableMetadata = $tableMetadata;
         $this->_tableAttribut = $tableAttribut;
+        $this->_tableFavoris = $tableFavoris;
     }
 
     // liste les produits du catalogue pour leur management
     public function adminAction() {
 
-        // si on vient sur cette page après avoir ajouté/modifié/supprimé un article,
+        // si on vient sur cette page après avoir supprimé une fiche,
         // on récupère son nom pour réaliser un affichage de confirmation
 
-        // $nameProductDeleted = (string)$this->params()->fromQuery('nameProductDeleted', '');
-
-        // les pages commencent à 1
+        $deleted = (string)$this->params()->fromQuery('deleted', '');
 
         return new ViewModel([
             'fiches' => $this->_tableFiche->getFichesOfUser($this->_authManager->getUserData()['id']),
-            // 'nameProductDeleted' => $nameProductDeleted,
+            'deleted' => $deleted,
         ]);
     }
-/*
-    // supprime un produit
+
+    // supprime une fiche
     public function deleteAction() {
 
-        $idProduct = (int)$this->params()->fromRoute('id', -1);
+        $idFiche = (int)$this->params()->fromRoute('id', -1);
 
-        $page = (string)$this->params()->fromQuery('page', '1');
+        $ficheDeleted = $this->_tableFiche->find($idFiche);
 
-        $productDeleted = $this->_tableProduct->find($idProduct);
-
-        // si le produit à supprimer n'existe pas -> 404
-        if ($productDeleted == null) {
+        // si la fiche à supprimer n'existe pas -> 404
+        if ($ficheDeleted == null) {
             $this->getResponse()->setStatusCode(404);
             return;
         }
 
-        // on spécifit dans l'URL de redirection le nom du produit qui a été supprimé
-        $redirectUrl = "/admin/" . $page . "?nameProductDeleted=" . $productDeleted->_nom;
+        // on spécifit dans l'URL de redirection le nom de la fiche qui a été supprimé
+        $redirectUrl = "/admin?deleted=" . $ficheDeleted->_nom;
 
-        // suppression du produit et de ses références dans les paniers et historiques des utilisateurs
-        $this->_tableProduct->delete($productDeleted);
-        $this->_tablePanier->deleteProduct($idProduct);
-        $this->_tableHistorique->delete($idProduct);
+        // suppression de la fiche, de ses sous-attributs et de ses références dans les favoris des utilisateurs
+        $this->_tableFavoris->deleteFicheFromFavoris($idFiche);
+        $this->_tableAttribut->deleteAllAttributsOfFiche($idFiche);
+        $this->_tableFiche->delete($ficheDeleted);
 
         // on redirige vers la liste avec un affichage pour confirmer la suppression
         if (!empty($redirectUrl)) {
@@ -83,7 +82,41 @@ class AdminController extends AbstractActionController
             $this->redirect()->toUrl($redirectUrl);
         }
     }
-    */
+
+    // supprime un attribut
+    public function deleteattributAction() {
+
+        $idFiche = (int)$this->params()->fromRoute('idfiche', -1);
+        $idAttribut = (int)$this->params()->fromRoute('idattribut', -1);
+
+        $attributDeleted = $this->_tableAttribut->find($idAttribut);
+
+        // si l'attribut à supprimer n'existe pas -> 404
+        if ($attributDeleted == null) {
+            $this->getResponse()->setStatusCode(404);
+            return;
+        }
+
+        // on spécifit dans l'URL de redirection le nom de la fiche qui a été supprimé
+        $redirectUrl = "/editfiche/" . $idFiche . "?deleted=" . $attributDeleted->_nom;
+
+        // suppression de l'attributet de ses sous-attributs
+        $this->_tableAttribut->deleteAttributAndHisSousAttributs($idAttribut);
+
+        // on redirige vers la fiche avec un affichage pour confirmer la suppression
+        if (!empty($redirectUrl)) {
+            $uri = UriFactory::factory($redirectUrl);
+            if (!$uri->isValid() || $uri->getHost()!=null)
+                throw new \Exception('Incorrect redirect URL: ' . $redirectUrl);
+        }
+
+        if(empty($redirectUrl)) {
+            return $this->redirect()->toRoute('index');
+        } else {
+            $this->redirect()->toUrl($redirectUrl);
+        }
+    }
+    
     // modifit une fiche
     public function editficheAction() {
 
@@ -118,6 +151,7 @@ class AdminController extends AbstractActionController
                     'form' => $form,
                     'error' => true,
                     'modif' => false,
+                    'deleted' => "",
                 ));
             }
 
@@ -136,10 +170,17 @@ class AdminController extends AbstractActionController
                 'form' => $form,
                 'error' => false,
                 'modif' => true,
+                'deleted' => "",
             ));
 
         // sinon on remplit le formulaire avec les infos de la fiche et on l'affiche
         } else {
+
+            // si on vient sur cette page après avoir supprimé une fiche,
+            // on récupère son nom pour réaliser un affichage de confirmation
+    
+            $deleted = (string)$this->params()->fromQuery('deleted', '');
+            
             $form->setData([
                 'nom'=>$fiche->_nom,
                 'description'=>$fiche->_description
@@ -150,6 +191,7 @@ class AdminController extends AbstractActionController
                 'form' => $form,
                 'error' => false,
                 'modif' => false,
+                'deleted' => $deleted,
             ));
         }
     }
