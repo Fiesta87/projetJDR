@@ -1,0 +1,38 @@
+<?php
+$this->headTitle("Ajout d'un attribut");
+
+$form->get('nom')->setAttributes([
+    'class'=>'form-control', 
+    'placeholder'=>"Nom de l'attribut"
+    ]);
+
+$form->get('submit')
+        ->setAttributes(['class'=>'btn btn-primary'])
+        ->setValue('Save');
+
+$form->prepare();
+?>
+
+<?php if($error): ?>
+
+<p>L'un des champs n'est pas correct !</p>
+
+<?php endif ?>
+
+<?php if($nomAttributParent != "NULL_NAME"): ?>
+
+<h1>Ajout d'un sous-attribut à l'attribut <?= $nomAttributParent ?></h1>
+
+<?php else: ?>
+
+<h1>Ajout d'un attribut à la fiche <?= $fiche->_nom ?></h1>
+
+<?php endif ?>
+
+<form class="form-edit" method="post">
+
+    <?= $this->formLabel($form->get('nom')); ?>
+    <?= $this->formElement($form->get('nom')); ?>
+    <button class="btn btn-primary btn1" type="submit">Créer le nouvel attribut</button>
+
+</form>

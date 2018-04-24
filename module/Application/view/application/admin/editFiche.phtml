@@ -30,12 +30,6 @@ $form->prepare();
 
 <?php endif ?>
 
-<?php if($ajout): ?>
-
-<p>La fiche a été crée !</p>
-
-<?php endif ?>
-
 <h1>Modification de la fiche : <?= $fiche->_nom ?></h1>
 
 <form class="form-edit" method="post">
@@ -47,3 +41,21 @@ $form->prepare();
     <button class="btn btn-primary btn1" type="submit">Valider les modifications</button>
 
 </form>
+
+<a href="/editfiche/<?= $fiche->_id ?>/addattribut"><button type="button" class='btn btn-primary btn1'>Ajouter un attribut à la fiche</button></a>
+
+<?php foreach ($fiche->_attributs as $a1) : ?>
+<div class='row item'>
+
+    <div class='col-sm-2'>
+        <h3 class='secontitle'><?= $a1->_nom ?></h3>
+
+        <a href="/editfiche/<?= $fiche->_id ?>/addattribut/<?= $a1->_id ?>"><button type="button" class='btn btn-primary btn1'>Ajouter un sous-attribut à l'attribut <?= $a1->_nom ?></button></a>
+
+        <?php foreach ($a1->_sousAttributs as $a2) : ?>
+
+            <p><?= $a2->_nom ?></p>
+        <?php endforeach; ?>
+    </div>
+</div>
+<?php endforeach; ?>

@@ -4,10 +4,13 @@ namespace Application\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\JsonModel;
 use Application\Model\Fiche;
+use Application\Model\Attribut;
 use Application\Services\FicheTable;
+use Application\Services\AttributTable;
 use Application\Model\Metadata;
 use Application\Services\MetadataTable;
 use Application\Form\FicheAddForm;
+use Application\Form\AttributAddForm;
 use Zend\View\Model\ViewModel;
 use User\Services\AuthManager;
 use Zend\Uri\UriFactory;
@@ -18,12 +21,14 @@ class AdminController extends AbstractActionController
     private $_authManager;
     private $_tableFiche;
     private $_tableMetadata;
+    private $_tableAttribut;
 
-    public function __construct(AuthManager $authManager, FicheTable $tableFiche, MetadataTable $tableMetadata)
+    public function __construct(AuthManager $authManager, FicheTable $tableFiche, MetadataTable $tableMetadata, AttributTable $tableAttribut)
     {
         $this->_authManager = $authManager;
         $this->_tableFiche = $tableFiche;
         $this->_tableMetadata = $tableMetadata;
+        $this->_tableAttribut = $tableAttribut;
     }
 
     // liste les produits du catalogue pour leur management
@@ -34,17 +39,11 @@ class AdminController extends AbstractActionController
 
         // $nameProductDeleted = (string)$this->params()->fromQuery('nameProductDeleted', '');
 
-        // $nameProductAdded = (string)$this->params()->fromQuery('nameProductAdded', '');
-
-        // $nameProductModified = (string)$this->params()->fromQuery('nameProductModified', '');
-
         // les pages commencent à 1
 
         return new ViewModel([
             'fiches' => $this->_tableFiche->getFichesOfUser($this->_authManager->getUserData()['id']),
             // 'nameProductDeleted' => $nameProductDeleted,
-            // 'nameProductAdded' => $nameProductAdded,
-            // 'nameProductModified' => $nameProductModified,
         ]);
     }
 /*
@@ -118,6 +117,7 @@ class AdminController extends AbstractActionController
                     'fiche' => $fiche,
                     'form' => $form,
                     'error' => true,
+                    'modif' => false,
                 ));
             }
 
@@ -136,13 +136,83 @@ class AdminController extends AbstractActionController
                 'form' => $form,
                 'error' => false,
                 'modif' => true,
-                'ajout' => false,
             ));
 
-            /*
-            // on redirige vers la liste des articles en affichant un message de confirmation
+        // sinon on remplit le formulaire avec les infos de la fiche et on l'affiche
+        } else {
+            $form->setData([
+                'nom'=>$fiche->_nom,
+                'description'=>$fiche->_description
+            ]);
 
-            $redirectUrl = "/admin?nameProductModified=" . $data['nom'];
+            return new ViewModel(array(
+                'fiche' => $fiche,
+                'form' => $form,
+                'error' => false,
+                'modif' => false,
+            ));
+        }
+    }
+
+    // ajoute un attribut à une fiche
+    public function addattributAction() {
+
+        $idfiche = (int)$this->params()->fromRoute('idfiche', -1);
+        $idattributparent = (int)$this->params()->fromRoute('idattributparent', -1);
+
+        // si l'idfiche spécifié est négatif ou n'exite pas -> 404
+        if ($idfiche<1) {
+            $this->getResponse()->setStatusCode(404);
+            return;
+        }
+        
+        $fiche = $this->_tableFiche->find($idfiche);
+        
+        if ($fiche == null) {
+            $this->getResponse()->setStatusCode(404);
+            return;
+        }
+
+        $form = new AttributAddForm();
+        
+        // si on a complété le formulaire
+        if ($this->getRequest()->isPost()) {
+
+            $data = $this->params()->fromPost();
+
+            $form->setData($data);
+            
+            if(!$form->isValid()) {
+
+                $nomAttributParent = "NULL_NAME";
+
+                if($idattributparent != -1){
+                    $nomAttributParent = $this->_tableAttribut->find($idattributparent)->_nom;
+                }
+                
+                return new ViewModel(array(
+                    'fiche' => $fiche,
+                    'nomAttributParent' => $nomAttributParent,
+                    'form' => $form,
+                    'error' => true,
+                ));
+            }
+
+            // on crée le nouvel attribut
+
+            $attribut = new Attribut();
+
+            $attribut->_nom = $data['nom'];
+            $attribut->_idFiche = $idfiche;
+            $attribut->_idAttributParent = $idattributparent;
+            $attribut->_valeur = 1;
+
+            // on ajoute la fiche en BD
+            $this->_tableAttribut->insert($attribut);
+
+            // on redirige vers la modification
+
+            $redirectUrl = "/editfiche/" . $idfiche;
             
             if (!empty($redirectUrl)) {
                 $uri = UriFactory::factory($redirectUrl);
@@ -155,20 +225,21 @@ class AdminController extends AbstractActionController
             } else {
                 $this->redirect()->toUrl($redirectUrl);
             }
-*/
-        // sinon on remplit le formulaire avec les infos du produit et on l'affiche
+            
+        // sinon on remplit le formulaire avec les infos de l'attribut et on l'affiche
         } else {
-            $form->setData([
-                'nom'=>$fiche->_nom,
-                'description'=>$fiche->_description
-            ]);
 
+            $nomAttributParent = "NULL_NAME";
+
+            if($idattributparent != -1){
+                $nomAttributParent =$this->_tableAttribut->find($idattributparent)->_nom;
+            }
+            
             return new ViewModel(array(
                 'fiche' => $fiche,
+                'nomAttributParent' => $nomAttributParent,
                 'form' => $form,
                 'error' => false,
-                'modif' => false,
-                'ajout' => true,
             ));
         }
     }
@@ -204,7 +275,7 @@ class AdminController extends AbstractActionController
             // on ajoute la fiche en BD
             $id = $this->_tableFiche->insert($fiche);
 
-            // on redirige vers la lmodification
+            // on redirige vers la modification
 
             $redirectUrl = "/editfiche/" . $id;
             

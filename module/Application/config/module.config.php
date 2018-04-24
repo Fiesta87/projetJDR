@@ -123,6 +123,22 @@ return [
                 ],
             ],*/
 
+            // ajoute un attribut à une fiche
+            'addattribut' => [
+                'type'    => Segment::class,
+                'options' => [
+                    'route'    => '/editfiche/:idfiche/addattribut[/:idattributparent]',
+                    'constraints' => [
+                        'idfiche' => '[0-9]+',
+                        'idattributparent' => '[0-9]+',
+                    ],
+                    'defaults' => [
+                        'controller'    => Controller\AdminController::class,
+                        'action'        => 'addattribut',
+                    ],
+                ],
+            ],
+
             // modifit une fiche
             'editfiche' => [
                 'type'    => Segment::class,
