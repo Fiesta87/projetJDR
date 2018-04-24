@@ -3,12 +3,7 @@ $this->headTitle('Modification');
 
 $form->get('nom')->setAttributes([
     'class'=>'form-control', 
-    'placeholder'=>'Nom du produit'
-    ]);
-
-$form->get('prix')->setAttributes([
-    'class'=>'form-control', 
-    'placeholder'=>'Prix du produit'
+    'placeholder'=>'Nom de la fiche'
     ]);
 
 $form->get('description')->setAttributes([
@@ -29,18 +24,26 @@ $form->prepare();
 
 <?php endif ?>
 
-<h1>Modification du produit : <?= $product->_nom ?></h1>
+<?php if($modif): ?>
 
-<img class= 'imgItem' src="<?= $product->_image ?>">
+<p>Modification effectué !</p>
+
+<?php endif ?>
+
+<?php if($ajout): ?>
+
+<p>La fiche a été crée !</p>
+
+<?php endif ?>
+
+<h1>Modification de la fiche : <?= $fiche->_nom ?></h1>
 
 <form class="form-edit" method="post">
 
     <?= $this->formLabel($form->get('nom')); ?>
     <?= $this->formElement($form->get('nom')); ?>
-    <?= $this->formLabel($form->get('prix')); ?>
-    <?= $this->formElement($form->get('prix')); ?>
     <?= $this->formLabel($form->get('description')); ?>
     <?= $this->formElement($form->get('description')); ?>
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Valider les modifications</button>
+    <button class="btn btn-primary btn1" type="submit">Valider les modifications</button>
 
 </form>

@@ -84,7 +84,7 @@ class AdminController extends AbstractActionController
             $this->redirect()->toUrl($redirectUrl);
         }
     }
-    
+    */
     // modifit une fiche
     public function editficheAction() {
 
@@ -96,14 +96,14 @@ class AdminController extends AbstractActionController
             return;
         }
         
-        $product = $this->_tableProduct->find($id);
+        $fiche = $this->_tableFiche->find($id);
         
-        if ($product == null) {
+        if ($fiche == null) {
             $this->getResponse()->setStatusCode(404);
             return;
         }
 
-        $form = new ProductEditForm();
+        $form = new FicheAddForm();
         
         // si on a complété le formulaire
         if ($this->getRequest()->isPost()) {
@@ -115,7 +115,7 @@ class AdminController extends AbstractActionController
             if(!$form->isValid()) {
 
                 return new ViewModel(array(
-                    'product' => $product,
+                    'fiche' => $fiche,
                     'form' => $form,
                     'error' => true,
                 ));
@@ -123,13 +123,23 @@ class AdminController extends AbstractActionController
 
             $update =[
                 'nom' => $data['nom'],
-                'prix' => $data['prix'],
                 'description' => $data['description']
             ];
 
-            // on réalise la mise à jour de l'article
-            $this->_tableProduct->update($product, $update);
+            // on réalise la mise à jour de la fiche
+            $this->_tableFiche->update($fiche, $update);
 
+            $fiche = $this->_tableFiche->find($id);
+
+            return new ViewModel(array(
+                'fiche' => $fiche,
+                'form' => $form,
+                'error' => false,
+                'modif' => true,
+                'ajout' => false,
+            ));
+
+            /*
             // on redirige vers la liste des articles en affichant un message de confirmation
 
             $redirectUrl = "/admin?nameProductModified=" . $data['nom'];
@@ -145,23 +155,24 @@ class AdminController extends AbstractActionController
             } else {
                 $this->redirect()->toUrl($redirectUrl);
             }
-
+*/
         // sinon on remplit le formulaire avec les infos du produit et on l'affiche
         } else {
             $form->setData([
-                'nom'=>$product->_nom,
-                'prix'=>$product->_prix,
-                'description'=>$product->_description
+                'nom'=>$fiche->_nom,
+                'description'=>$fiche->_description
             ]);
 
             return new ViewModel(array(
-                'product' => $product,
+                'fiche' => $fiche,
                 'form' => $form,
                 'error' => false,
+                'modif' => false,
+                'ajout' => true,
             ));
         }
     }
-    */
+    
     // ajoute une fiche
     public function addAction() 
     {
