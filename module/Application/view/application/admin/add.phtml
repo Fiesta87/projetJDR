@@ -1,14 +1,9 @@
 <?php
-$this->headTitle('Modification');
+$this->headTitle('Ajout');
 
 $form->get('nom')->setAttributes([
     'class'=>'form-control', 
-    'placeholder'=>'Nom du produit'
-    ]);
-
-$form->get('prix')->setAttributes([
-    'class'=>'form-control', 
-    'placeholder'=>'Prix du produit'
+    'placeholder'=>'Nom de la fiche'
     ]);
 
 $form->get('description')->setAttributes([
@@ -29,17 +24,14 @@ $form->prepare();
 
 <?php endif ?>
 
-<h1>Ajout d'un produit</h1>
+<h1>Ajout d'une fiche</h1>
 
 <form class="form-edit" method="post">
 
     <?= $this->formLabel($form->get('nom')); ?>
     <?= $this->formElement($form->get('nom')); ?>
-    <?= $this->formLabel($form->get('prix')); ?>
-    <?= $this->formElement($form->get('prix')); ?>
     <?= $this->formLabel($form->get('description')); ?>
     <?= $this->formElement($form->get('description')); ?>
-    <?= $this->formElement($form->get('image')); ?>
-    <button class="btn btn-primary btn1" type="submit">Valider le nouveau produit</button>
+    <button class="btn btn-primary btn1" type="submit">Créer la nouvelle fiche</button>
 
 </form>

@@ -7,7 +7,7 @@ use Application\Model\Fiche;
 use Application\Services\FicheTable;
 use Application\Model\Metadata;
 use Application\Services\MetadataTable;
-// use Application\Form\ProductEditForm;
+use Application\Form\FicheAddForm;
 use Zend\View\Model\ViewModel;
 use User\Services\AuthManager;
 use Zend\Uri\UriFactory;
@@ -161,11 +161,11 @@ class AdminController extends AbstractActionController
             ));
         }
     }
-    
-    // ajoute un produit
+    */
+    // ajoute une fiche
     public function addAction() 
     {
-        $form = new ProductEditForm();
+        $form = new FicheAddForm();
 
         // si on a complété le formulaire
         if ($this->getRequest()->isPost()) {
@@ -177,27 +177,25 @@ class AdminController extends AbstractActionController
             if(!$form->isValid()) {
 
                 return new ViewModel(array(
-                    'image' => $data['image'],
                     'form' => $form,
                     'error' => true,
                 ));
             }
 
-            // on crée le nouveau produit
+            // on crée la nouvelle fiche
 
-            $product = new Product();
+            $fiche = new Fiche();
 
-            $product->_nom = $data['nom'];
-            $product->_prix = $data['prix'];
-            $product->_description = $data['description'];
-            $product->_image = $data['image'];
+            $fiche->_nom = $data['nom'];
+            $fiche->_description = $data['description'];
+            $fiche->_idUser = $this->_authManager->getUserData()['id'];
 
-            // on ajoute le produit en BD
-            $this->_tableProduct->insert($product, $update);
+            // on ajoute la fiche en BD
+            $id = $this->_tableFiche->insert($fiche);
 
-            // on redirige vers la liste des articles en affichant un message de confirmation
+            // on redirige vers la lmodification
 
-            $redirectUrl = "/admin?nameProductAdded=" . $data['nom'];
+            $redirectUrl = "/editfiche/" . $id;
             
             if (!empty($redirectUrl)) {
                 $uri = UriFactory::factory($redirectUrl);
@@ -214,20 +212,12 @@ class AdminController extends AbstractActionController
         // sinon on crée un formulaire vide et on l'affiche
         } else {
 
-            // on associe une image random
-            $image = "/img/img" . random_int(12, 21) . ".jpg";
-
-            $form->setData([
-                'image'=> $image,
-            ]);
-
             return new ViewModel(array(
-                'image' => $image,
                 'form' => $form,
                 'error' => false,
             ));
         }
-    }*/
+    }
 }
 
 ?>
