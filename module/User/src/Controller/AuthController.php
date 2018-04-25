@@ -9,6 +9,8 @@ use User\Services\UserManager;
 use User\Services\AuthManager;
 use User\Form\LoginForm;
 use User\Form\UserForm;
+use User\Form\CreationForm;
+use User\Models\User;
 use Zend\Uri\UriFactory;
 
 class AuthController extends AbstractActionController
@@ -108,6 +110,52 @@ class AuthController extends AbstractActionController
             'user' => $this->_authManager->getUserData(),
             'form' => $form,
             'modif' => $modif,
+        ]);
+    }
+
+    // affiche le compte de l'utilisateur pour modifier des paramètres personnels
+    public function creationAction() {
+
+        
+
+        $redirectUrl = (string)$this->params()->fromQuery('redirectUrl', '');
+        if (strlen($redirectUrl)>2048) {
+            throw new \Exception("Too long redirectUrl argument passed");
+        }
+
+        $form = new CreationForm();
+        $form->get('redirect_url')->setValue($redirectUrl);
+
+        $isLoginError = false;
+
+        if ($this->getRequest()->isPost()) {
+            $data = $this->params()->fromPost();
+            $form->setData($data);
+            
+            if($form->isValid()) {
+                $data = $form->getData();
+
+                $salt = random_bytes(16);
+
+                $password = hash("sha512", $data['password'] . $salt);
+                
+                $insert = [
+                    'username' => $data['username'],
+                    'email' => $data['useremail'],
+                    'password' => $password,
+                    'salt' => $salt
+                ];
+
+                $user = new User();
+                $user->exchangeArray($insert);
+
+                $this->_userManager->insert($user);
+            }
+        }
+
+
+        return new ViewModel([
+            'form' => $form,
         ]);
     }
 }

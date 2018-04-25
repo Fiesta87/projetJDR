@@ -44,6 +44,18 @@ return [
                     ],
                 ],
             ],
+
+            // affiche le compte de l'utilisateur pour modifier des paramètres personnels
+            'creation' => [
+                'type' => Literal::class,
+                'options' => [
+                    'route'    => '/creation',
+                    'defaults' => [
+                        'controller' => Controller\AuthController::class,
+                        'action'     => 'creation',
+                    ],
+                ],
+            ],
         ],
     ],
     'controllers' => [

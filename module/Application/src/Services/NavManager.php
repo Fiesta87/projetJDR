@@ -50,6 +50,12 @@ class NavManager
                 'label' => 'Connexion',
                 'link'  => $url('login')
             ];
+
+            $items[] = [
+                'id' => 'création',
+                'label' => 'Création de compte',
+                'link' => $url('creation')
+            ];
         } else {
             $items[] = [
                 'id' => 'logout',
@@ -79,6 +85,7 @@ class NavManager
                 'label' => 'Mes Favoris',
                 'link' => $url('favoris')
             ];
+
         }
         
         return $items;

@@ -1,0 +1,60 @@
+<?php
+$this->headTitle('Sign in');
+
+$form->get('username')->setAttributes([
+    'class'=>'form-control', 
+    'placeholder'=>'Username',
+    'required' => true,
+    'autofocus' => true
+    ])
+    ->setLabelAttributes([
+        'class' => 'sr-only'
+    ]);
+
+$form->get('useremail')->setAttributes([
+    'class'=>'form-control', 
+    'placeholder'=>'Email address',
+    'required' => true,
+    'autofocus' => true
+    ])
+    ->setLabelAttributes([
+        'class' => 'sr-only'
+    ]);
+
+$form->get('password')->setAttributes([
+    'class'=>'form-control', 
+    'placeholder'=>'Password',
+    'required' => true,
+    ])
+    ->setLabelAttributes([
+        'class' => 'sr-only'
+    ]);
+
+    $form->get('passwordVerification')->setAttributes([
+        'class'=>'form-control', 
+        'placeholder'=>'passwordVerification',
+        'required' => true,
+        ])
+        ->setLabelAttributes([
+            'class' => 'sr-only'
+        ]);
+?>
+
+<div class="row">
+    <div class="col-md-offset-4 col-md-3">
+        <form class="form-signin" method="post">
+            <h2 class="form-signin-heading">Please sign in</h2>
+            <?= $this->formLabel($form->get('username')); ?>
+            <?= $this->formElement($form->get('username')); ?>
+            <?= $this->formLabel($form->get('useremail')); ?>
+            <?= $this->formElement($form->get('useremail')); ?>
+            <?= $this->formLabel($form->get('password')); ?>
+            <?= $this->formElement($form->get('password')); ?>
+            <?= $this->formLabel($form->get('passwordVerification')); ?>
+            <?= $this->formElement($form->get('passwordVerification')); ?>
+            <?= $this->formElement($form->get('redirect_url')); ?>
+            <?= $this->formElement($form->get('csrf')) ?>
+            <button class="btn1" type="submit">Sign in</button>
+        </form>
+    </div>
+</div>

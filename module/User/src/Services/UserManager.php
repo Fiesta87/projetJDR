@@ -2,12 +2,17 @@
 namespace User\Services;
 
 use Zend\Db\TableGateway\TableGatewayInterface;
+use User\Models\User;
 
 class UserManager {
     protected $_tableGateway;
 
     public function __construct(TableGatewayInterface $tableGateway){
         $this->_tableGateway = $tableGateway;
+    }
+
+    public function insert(User $a){
+        $this->_tableGateway->insert($a->toValues());
     }
 
     public function findByUserEmail($useremail){
