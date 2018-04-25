@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  jeu. 19 avr. 2018 à 03:27
+-- Généré le :  mer. 25 avr. 2018 à 15:32
 -- Version du serveur :  5.7.19
 -- Version de PHP :  7.1.9
 
@@ -84,14 +84,6 @@ CREATE TABLE IF NOT EXISTS `fiche` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
---
--- Déchargement des données de la table `fiche`
---
-
-INSERT INTO `fiche` (`id`, `nom`, `description`, `idUser`) VALUES
-(1, 'fiche de test', 'Ut lacinia diam ut eros pulvinar lobortis. Vivamus quam libero, pellentesque sit amet nunc a, ornare facilisis nisl. Suspendisse potenti. Cras arcu augue, maximus non ligula non, sodales ornare ex. Ut iaculis pellentesque turpis. Nullam maximus nibh eu nisi rutrum, id mollis felis mattis. Sed faucibus eget turpis sed accumsan. Aenean finibus pellentesque euismod.', 1),
-(2, 'Ma deuxième fiche', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eros ex, tristique sit amet arcu eget, ornare mattis mi. Donec sagittis scelerisque erat, at tristique enim auctor ut. Sed tempus gravida quam, in varius massa consectetur eget. Sed faucibus venenatis metus, et vestibulum metus faucibus et. Aenean eu mi dapibus, rhoncus lorem non, posuere odio. Duis congue ex et tellus feugiat condimentum. Aenean volutpat eros vel libero maximus hendrerit.', 1);
-
 -- --------------------------------------------------------
 
 --
@@ -125,17 +117,16 @@ CREATE TABLE IF NOT EXISTS `user` (
   `username` varchar(200) NOT NULL,
   `email` varchar(200) NOT NULL,
   `password` varchar(200) NOT NULL,
-  `salt` varchar(200) NOT NULL,
+  `salt` binary(16) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `user`
 --
 
 INSERT INTO `user` (`id`, `username`, `email`, `password`, `salt`) VALUES
-(1, 'dupond', 'dupond@gmail.com', '05115fbd1dabdf649dc21df4f4e108402db89406185f49133f4fcd6ca616892b6757ee913dfa165c4981ca05284c637321dc1edf1b66bca6fa3b6893fa238b50', 'lul'),
-(2, 'martin', 'martin@gmail.com', '8cfcc6165ef46edacff1e82317858b15af9cd42b300969407dd239b5dcac16b87b1ad94583bf73aea30e65ee6da6723cdee81467277f1e74e848c217d90c702f', 'sombra');
+(7, 'amesk', 'azerty@gmail.com', 'fe88defbf8fd208632e26c37055d2872de0f03575109dec5e0aaf4dc0fea06c55dffc7ebc12636957c897da9b601d267fd92d20d24ef93794dbec204ae7335a3', 0xa023fd6aeb71f7255bbea7810c98a295);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
