@@ -38,5 +38,9 @@ class FavorisTable {
     public function delete(Favoris $toDelete){
         return $this->_tableGateway->delete(['idUser' => $toDelete->_idUser, 'idFiche' => $toDelete->_idFiche]);
     }
+
+    public function deleteFicheFromFavoris($idFiche){
+        return $this->_tableGateway->delete(['idFiche' => $idFiche]);
+    }
 }
 ?>

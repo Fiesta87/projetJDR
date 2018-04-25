@@ -1,0 +1,66 @@
+<?php
+$this->headTitle('Modification');
+
+$form->get('nom')->setAttributes([
+    'class'=>'form-control', 
+    'placeholder'=>'Nom de la fiche',
+    'autofocus' => true
+    ]);
+
+$form->get('description')->setAttributes([
+    'class'=>'form-control', 
+    'placeholder'=>'Description'
+    ]);
+
+$form->get('submit')
+        ->setAttributes(['class'=>'btn btn-primary'])
+        ->setValue('Save');
+
+$form->prepare();
+?>
+
+<?php if($error): ?>
+
+<p>L'un des champs n'est pas correct !</p>
+
+<?php endif ?>
+
+<?php if($modif): ?>
+
+<p>Modification effectué !</p>
+
+<?php endif ?>
+
+<?php if(!empty($deleted)): ?>
+    <p>L'attribut <?= $deleted ?> a bien été supprimé.</p>
+<?php endif ?>
+
+<h1>Modification de la fiche : <?= $fiche->_nom ?></h1>
+
+<form class="form-edit" method="post">
+
+    <?= $this->formLabel($form->get('nom')); ?>
+    <?= $this->formElement($form->get('nom')); ?>
+    <?= $this->formLabel($form->get('description')); ?>
+    <?= $this->formElement($form->get('description')); ?>
+    <button class="btn btn-primary btn1" type="submit">Valider les modifications</button>
+
+</form>
+
+<a href="/editfiche/<?= $fiche->_id ?>/addattribut"><button type="button" class='btn btn-primary btn1'>Ajouter un attribut à la fiche</button></a>
+
+<?php foreach ($fiche->_attributs as $a1) : ?>
+<div class='row item'>
+
+    <div class='col-sm-2'>
+        <h3 class='secontitle'><?= $a1->_nom ?><a href="/editfiche/<?= $fiche->_id ?>/deleteattribut/<?= $a1->_id ?>"><button type="button" class='btn btn-primary btn1'>Supprimer</button></a></h3>
+
+        <a href="/editfiche/<?= $fiche->_id ?>/addattribut/<?= $a1->_id ?>"><button type="button" class='btn btn-primary btn1'>Ajouter un sous-attribut à l'attribut <?= $a1->_nom ?></button></a>
+
+        <?php foreach ($a1->_sousAttributs as $a2) : ?>
+
+            <p><?= $a2->_nom ?><a href="/editfiche/<?= $fiche->_id ?>/deleteattribut/<?= $a2->_id ?>"><button type="button" class='btn btn-primary btn1'>Supprimer</button></a></p>
+        <?php endforeach; ?>
+    </div>
+</div>
+<?php endforeach; ?>

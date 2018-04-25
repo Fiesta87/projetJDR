@@ -107,8 +107,8 @@ return [
                     ],
                 ],
             ],
-/*
-            // supprime un produit
+
+            // supprime une fiche
             'delete' => [
                 'type'    => Segment::class,
                 'options' => [
@@ -121,7 +121,39 @@ return [
                         'action'        => 'delete',
                     ],
                 ],
-            ],*/
+            ],
+
+            // supprime un attribut
+            'deleteattribut' => [
+                'type'    => Segment::class,
+                'options' => [
+                    'route'    => '/editfiche/:idfiche/deleteattribut/:idattribut',
+                    'constraints' => [
+                        'idfiche' => '[0-9]+',
+                        'idattribut' => '[0-9]+',
+                    ],
+                    'defaults' => [
+                        'controller'    => Controller\AdminController::class,
+                        'action'        => 'deleteattribut',
+                    ],
+                ],
+            ],
+
+            // ajoute un attribut à une fiche
+            'addattribut' => [
+                'type'    => Segment::class,
+                'options' => [
+                    'route'    => '/editfiche/:idfiche/addattribut[/:idattributparent]',
+                    'constraints' => [
+                        'idfiche' => '[0-9]+',
+                        'idattributparent' => '[0-9]+',
+                    ],
+                    'defaults' => [
+                        'controller'    => Controller\AdminController::class,
+                        'action'        => 'addattribut',
+                    ],
+                ],
+            ],
 
             // modifit une fiche
             'editfiche' => [

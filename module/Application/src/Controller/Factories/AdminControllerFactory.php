@@ -10,7 +10,9 @@ use User\Services\AuthManager;
 use Interop\Container\ContainerInterface;
 use Application\Controller\AdminController;
 use Application\Services\FicheTable;
+use Application\Services\AttributTable;
 use Application\Services\MetadataTable;
+use Application\Services\FavorisTable;
 
 /**
  * The factory responsible for creating of authentication service.
@@ -27,7 +29,9 @@ class AdminControllerFactory implements FactoryInterface
         return new AdminController(
             $container->get(AuthManager::class),
             $container->get(FicheTable::class),
-            $container->get(MetadataTable::class)
+            $container->get(MetadataTable::class),
+            $container->get(AttributTable::class),
+            $container->get(FavorisTable::class)
         );
     }
 }

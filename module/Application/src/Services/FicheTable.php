@@ -54,6 +54,7 @@ class FicheTable {
 
     public function insert(Fiche $f){
         $this->_tableGateway->insert($f->toValues());
+        return $this->_tableGateway->getLastInsertValue();
     }
 
     /**

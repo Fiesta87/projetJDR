@@ -7,14 +7,14 @@ use Zend\InputFilter\InputFilter;
 use Zend\Validator\Digits;
 
 /**
- * This form is used to collect product informations
+ * This form is used to collect fiche informations
  */
-class FicheEditForm extends Form
+class AttributAddForm extends Form
 {
     public function __construct()
     {
         // Define form name
-        parent::__construct('ficheedit-form');
+        parent::__construct('attributadd-form');
      
         // Set POST method for this form
         $this->setAttribute('method', 'post');
@@ -27,7 +27,7 @@ class FicheEditForm extends Form
 
     protected function addElements() 
     {
-     /*   // Add "nom" field
+        // Add "nom" field
         $this->add([            
             'type'  => 'text',
             'name' => 'nom',
@@ -35,31 +35,16 @@ class FicheEditForm extends Form
                 'label' => 'Nom',
             ],
         ]);
-        
-        // Add "prix" field
+        /*
+        // Add "valeur" field
         $this->add([            
             'type'  => 'text',
-            'name' => 'prix',
+            'name' => 'valeur',
             'options' => [
-                'label' => 'Prix',
+                'label' => 'Valeur',
             ],
         ]);
-        
-        // Add "description" field
-        $this->add([            
-            'type'  => 'text',
-            'name' => 'description',
-            'options' => [
-                'label' => 'Description',
-            ],
-        ]);
-        
-        // Add "image" field
-        $this->add([            
-            'type'  => 'hidden',
-            'name' => 'image',
-        ]);
-        
+        */
         // Add the Submit button
         $this->add([
             'type'  => 'submit',
@@ -68,7 +53,7 @@ class FicheEditForm extends Form
                 'value' => 'Valider',
                 'id' => 'submit',
             ],
-        ]);*/
+        ]);
     }
 
     /**
@@ -76,10 +61,10 @@ class FicheEditForm extends Form
      */
     private function addInputFilter() 
     {
-      /*  // Create main input filter
+        // Create main input filter
         $inputFilter = new InputFilter();        
         $this->setInputFilter($inputFilter);
-                
+        
         // Add input for "nom" field
         $inputFilter->add([
                 'name'     => 'nom',
@@ -96,20 +81,6 @@ class FicheEditForm extends Form
                     ],
                 ],
             ]);
-                
-            // Add input for "prix" field
-            $inputFilter->add([
-                    'name'     => 'prix',
-                    'required' => true,
-                    'filters'  => [
-                        ['name' => 'StringTrim'],                    
-                    ],                
-                    'validators' => [
-                        [
-                            'name' => 'Digits'
-                        ],
-                    ],
-                ]);*/
     }
 }
 
