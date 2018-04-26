@@ -37,8 +37,20 @@ class IndexController extends AbstractActionController
         $pagePrecedente = max($page-1, 1);
         $pageSuivante = $page+1;
 
+        $fiches = [];
+
+        if ($this->getRequest()->isPost()) {
+
+            $data = $this->params()->fromPost();
+            $fiches = $this->_tableFiche->fetchPageRecherche($page, $data['recherche']);
+
+        } else {
+
+            $fiches = $this->_tableFiche->fetchPage($page);
+        }
+
         return new ViewModel([
-            'fiches' => $this->_tableFiche->fetchPage($page),
+            'fiches' => $fiches,
             'page' => $page,
             'pagePrecedente' => $pagePrecedente,
             'pageSuivante' => $pageSuivante,

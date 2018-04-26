@@ -1,5 +1,9 @@
 <h1 id='maintitle'>Galerie</h1><hr class='bottomSpace line'>
 
+<form method="post">
+    Recherche par titre : <input type="text" name="recherche"> <input type="submit" value="Rechercher">
+</form>
+
 <?php foreach ($fiches as $f) : ?>
 <a href="/fiche/<?= $f->_id ?>"><div class='row item'>
 
