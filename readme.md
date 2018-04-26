@@ -1,9 +1,9 @@
 Utilisateur existant :
 
-dupond
-	login :		dupond@gmail.com
+Bob
+	login :		bob@gmail.com
 	password :	superman
 
-martin
-	login :		martin@gmail.com
-	password :	12345
+amesk
+	login :		azerty@gmail.com
+	password :	azerty

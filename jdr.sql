@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  mer. 25 avr. 2018 à 15:32
+-- Généré le :  jeu. 26 avr. 2018 à 23:14
 -- Version du serveur :  5.7.19
 -- Version de PHP :  7.1.9
 
@@ -36,19 +36,19 @@ CREATE TABLE IF NOT EXISTS `attribut` (
   `nom` varchar(200) NOT NULL,
   `valeur` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `attribut`
 --
 
 INSERT INTO `attribut` (`id`, `idFiche`, `idAttributParent`, `nom`, `valeur`) VALUES
-(1, 1, -1, 'Physique', 1),
-(2, 1, -1, 'Mental', 1),
-(3, 1, 1, 'Force', 1),
-(4, 1, 1, 'Vigueur', 1),
-(5, 1, 2, 'Intelligence', 1),
-(6, 1, 2, 'Perception', 1);
+(11, 4, 7, 'Force', 1),
+(10, 4, 8, 'Volonté', 1),
+(9, 4, 8, 'Intelligence', 1),
+(8, 4, -1, 'Mental', 1),
+(7, 4, -1, 'Physique', 1),
+(12, 4, 7, 'Endurance', 1);
 
 -- --------------------------------------------------------
 
@@ -67,7 +67,7 @@ CREATE TABLE IF NOT EXISTS `favoris` (
 --
 
 INSERT INTO `favoris` (`idUser`, `idFiche`) VALUES
-(2, 2);
+(8, 4);
 
 -- --------------------------------------------------------
 
@@ -82,7 +82,15 @@ CREATE TABLE IF NOT EXISTS `fiche` (
   `description` varchar(500) NOT NULL,
   `idUser` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `fiche`
+--
+
+INSERT INTO `fiche` (`id`, `nom`, `description`, `idUser`) VALUES
+(4, 'Ma super fiche', 'Une super fiche !', 8),
+(5, 'Fiche Lorem Ipsum', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed a metus lacinia, gravida urna sit amet, dignissim dolor. Aenean iaculis felis eget massa dignissim fringilla. Sed interdum lorem odio, in fringilla ipsum vehicula ut. Ut sollicitudin scelerisque libero, sit amet laoreet velit ornare vestibulum. Fusce quis erat eget lorem vulputate mollis posuere in urna. Aliquam erat volutpat. Cras eget libero at purus venenatis luctus vitae non quam.', 8);
 
 -- --------------------------------------------------------
 
@@ -119,14 +127,15 @@ CREATE TABLE IF NOT EXISTS `user` (
   `password` varchar(200) NOT NULL,
   `salt` binary(16) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `user`
 --
 
 INSERT INTO `user` (`id`, `username`, `email`, `password`, `salt`) VALUES
-(7, 'amesk', 'azerty@gmail.com', 'fe88defbf8fd208632e26c37055d2872de0f03575109dec5e0aaf4dc0fea06c55dffc7ebc12636957c897da9b601d267fd92d20d24ef93794dbec204ae7335a3', 0xa023fd6aeb71f7255bbea7810c98a295);
+(7, 'amesk', 'azerty@gmail.com', 'fe88defbf8fd208632e26c37055d2872de0f03575109dec5e0aaf4dc0fea06c55dffc7ebc12636957c897da9b601d267fd92d20d24ef93794dbec204ae7335a3', 0xa023fd6aeb71f7255bbea7810c98a295),
+(8, 'Bob', 'bob@gmail.com', '1e68b7a95b5c174fe4f06329b2ae785f4b0bed10c8831b24547292d952f48467a6db8eb066c64b2feabbf8929bff2ae1d88202848370c069c431cf51812a721d', 0x469b88445d4ac69011998e49637adf12);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
