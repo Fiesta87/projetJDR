@@ -16,6 +16,7 @@ class FicheTable {
 
     private $offset;
     private $nbFicheParPage;
+    private $recherche;
 
     public function __construct(TableGatewayInterface $tableGateway, MetadataTable $tableMetadata, AttributTable $tableAttribut, UserManager $tableUser){
         $this->_tableGateway = $tableGateway;
@@ -41,6 +42,37 @@ class FicheTable {
         // pagination
         $resultSet = $this->_tableGateway->select(function (Select $select) {
             $select->limit($this->nbFicheParPage)->offset($this->offset);
+        });
+
+        $return = array();
+        foreach( $resultSet as $r ){
+            $r->_userName = $this->_tableUser->getNameOfUser($r->_idUser);
+            $return[]=$r;
+        }
+            
+        return $return;
+    }
+
+    /**
+     * Retourne la liste des fiches d'une page de la galerie ayant le mot de recherche dans leur titre.
+     * Les fiches retournées n'ont pas leur listes des attributs initialisé.
+     * L'utilisateur de la fiche est initialisé.
+     * Utilisez la méthode find pour récupérer une fiche compléte.
+     */
+    public function fetchPageRecherche($page, $recherche) {
+
+        // on récupère le nombre d'article par page spécifié dans la BD (Metadata)
+        $this->nbFicheParPage = intval($this->_tableMetadata->findByNom('page')->_valeur);
+
+        $this->offset = ($page-1) * $this->nbFicheParPage;
+
+        $this->recherche = $recherche;
+
+        // pagination
+        $resultSet = $this->_tableGateway->select(function (Select $select) {
+            $where = new \Zend\Db\Sql\Where();
+            $where->like("nom", "%".$this->recherche."%");
+            $select->where($where)->limit($this->nbFicheParPage)->offset($this->offset);
         });
 
         $return = array();
