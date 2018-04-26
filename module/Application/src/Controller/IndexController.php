@@ -39,6 +39,7 @@ class IndexController extends AbstractActionController
 
         return new ViewModel([
             'fiches' => $this->_tableFiche->fetchPage($page),
+            'favoris' => $this->_tableFavoris->get5MostFavorite(),
             'page' => $page,
             'pagePrecedente' => $pagePrecedente,
             'pageSuivante' => $pageSuivante,

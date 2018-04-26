@@ -150,6 +150,23 @@ class AuthController extends AbstractActionController
                 $user->exchangeArray($insert);
 
                 $this->_userManager->insert($user);
+
+                $result = $this->_authManager->login($data['useremail'], $data['password']);
+                if ($result->getCode() == Result::SUCCESS) {
+                    $redirectUrl = $this->params()->fromPost('redirect_url', '');
+
+                    if (!empty($redirectUrl)) {
+                        $uri = UriFactory::factory($redirectUrl);
+                        if (!$uri->isValid() || $uri->getHost()!=null)
+                            throw new \Exception('Incorrect redirect URL: ' . $redirectUrl);
+                    }
+
+                    if(empty($redirectUrl)) {
+                        return $this->redirect()->toRoute('index');
+                    } else {
+                        $this->redirect()->toUrl($redirectUrl);
+                    }
+                }       
             }
         }
 

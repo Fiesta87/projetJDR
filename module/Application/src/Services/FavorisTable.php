@@ -42,5 +42,19 @@ class FavorisTable {
     public function deleteFicheFromFavoris($idFiche){
         return $this->_tableGateway->delete(['idFiche' => $idFiche]);
     }
+
+    public function get5MostFavorite(){
+        $resultSet = $this->_tableGateway->select(function (Select $select) {
+            $select->columns(array('idFiche', 'num' => new \Zend\Db\Sql\Expression('COUNT(idFiche)')))->group('idFiche')->order('num DESC')->limit(5);
+        });
+
+        $return = array();
+        foreach( $resultSet as $r ){
+            $r = $this->_tableFiche->find($r->_idFiche);
+            $return[]=$r;
+        }
+            
+        return $return;
+    }
 }
 ?>
