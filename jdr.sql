@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  jeu. 26 avr. 2018 à 23:14
+-- Généré le :  jeu. 26 avr. 2018 à 23:27
 -- Version du serveur :  5.7.19
 -- Version de PHP :  7.1.9
 
@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS `attribut` (
   `nom` varchar(200) NOT NULL,
   `valeur` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `attribut`
@@ -48,7 +48,16 @@ INSERT INTO `attribut` (`id`, `idFiche`, `idAttributParent`, `nom`, `valeur`) VA
 (9, 4, 8, 'Intelligence', 1),
 (8, 4, -1, 'Mental', 1),
 (7, 4, -1, 'Physique', 1),
-(12, 4, 7, 'Endurance', 1);
+(12, 4, 7, 'Endurance', 1),
+(13, 6, -1, 'Implants Moteur', 1),
+(14, 6, -1, 'Implants psychique', 1),
+(15, 6, 13, 'Servo-moteur de jambe', 1),
+(16, 6, 13, 'Biceps artificiels', 1),
+(17, 6, 14, 'Réseau neuronal', 1),
+(18, 6, 14, 'Antenne de communication', 1),
+(19, 6, -1, 'Implant auxiliaire', 1),
+(20, 6, 19, 'Œil Bionique', 1),
+(21, 6, 19, 'Acuité auditive', 1);
 
 -- --------------------------------------------------------
 
@@ -67,7 +76,9 @@ CREATE TABLE IF NOT EXISTS `favoris` (
 --
 
 INSERT INTO `favoris` (`idUser`, `idFiche`) VALUES
-(8, 4);
+(8, 4),
+(7, 6),
+(8, 6);
 
 -- --------------------------------------------------------
 
@@ -82,7 +93,7 @@ CREATE TABLE IF NOT EXISTS `fiche` (
   `description` varchar(500) NOT NULL,
   `idUser` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `fiche`
@@ -90,7 +101,8 @@ CREATE TABLE IF NOT EXISTS `fiche` (
 
 INSERT INTO `fiche` (`id`, `nom`, `description`, `idUser`) VALUES
 (4, 'Ma super fiche', 'Une super fiche !', 8),
-(5, 'Fiche Lorem Ipsum', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed a metus lacinia, gravida urna sit amet, dignissim dolor. Aenean iaculis felis eget massa dignissim fringilla. Sed interdum lorem odio, in fringilla ipsum vehicula ut. Ut sollicitudin scelerisque libero, sit amet laoreet velit ornare vestibulum. Fusce quis erat eget lorem vulputate mollis posuere in urna. Aliquam erat volutpat. Cras eget libero at purus venenatis luctus vitae non quam.', 8);
+(5, 'Fiche Lorem Ipsum', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed a metus lacinia, gravida urna sit amet, dignissim dolor. Aenean iaculis felis eget massa dignissim fringilla. Sed interdum lorem odio, in fringilla ipsum vehicula ut. Ut sollicitudin scelerisque libero, sit amet laoreet velit ornare vestibulum. Fusce quis erat eget lorem vulputate mollis posuere in urna. Aliquam erat volutpat. Cras eget libero at purus venenatis luctus vitae non quam.', 8),
+(6, 'Cyborg', 'Une bonne base de départ pour un cyborg !', 7);
 
 -- --------------------------------------------------------
 
