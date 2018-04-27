@@ -18,6 +18,8 @@ $form->prepare();
 
 <p>L'un des champs n'est pas correct !</p>
 
+<hr class='bottomSpace line'>
+
 <?php endif ?>
 
 <?php if($nomAttributParent != "NULL_NAME"): ?>
@@ -30,10 +32,15 @@ $form->prepare();
 
 <?php endif ?>
 
+<hr class='bottomSpace line'>
+
 <form class="form-edit" method="post">
 
     <?= $this->formLabel($form->get('nom')); ?>
     <?= $this->formElement($form->get('nom')); ?>
+
+    <hr class='bottomSpace line'>
+    
     <button class="btn btn-primary btn1" type="submit">Créer le nouvel attribut</button>
 
 </form>

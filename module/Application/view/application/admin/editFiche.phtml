@@ -41,13 +41,23 @@ $form->prepare();
 
     <?= $this->formLabel($form->get('nom')); ?>
     <?= $this->formElement($form->get('nom')); ?>
+
+    <hr class='bottomSpace line'>
+
     <?= $this->formLabel($form->get('description')); ?>
     <?= $this->formElement($form->get('description')); ?>
+
+    <hr class='bottomSpace line'>
+    
     <button class="btn btn-primary btn1" type="submit">Valider les modifications</button>
 
 </form>
 
+<hr class='bottomSpace line'>
+
 <a href="/editfiche/<?= $fiche->_id ?>/addattribut"><button type="button" class='btn btn-primary btn1'>Ajouter un attribut à la fiche</button></a>
+
+<hr class='bottomSpace line'>
 
 <?php foreach ($fiche->_attributs as $a1) : ?>
 <div class='row item'>
@@ -61,6 +71,9 @@ $form->prepare();
 
             <p><?= $a2->_nom ?><a href="/editfiche/<?= $fiche->_id ?>/deleteattribut/<?= $a2->_id ?>"><button type="button" class='btn btn-primary btn1'>Supprimer</button></a></p>
         <?php endforeach; ?>
+
+        <hr class='bottomSpace line'>
+        
     </div>
 </div>
 <?php endforeach; ?>

@@ -4,6 +4,8 @@
     <p>La fiche <?= $deleted ?> a bien été supprimé.</p>
 <?php endif ?>
 
+<hr class='bottomSpace line'>
+
 <a href="/add"><button type="button" class='btn btn-primary btn1'>Ajouter une fiche</button></a>
 
 <?php if(!empty($fiches)): ?>
@@ -19,6 +21,9 @@
     </div>
     <a href="/delete/<?= $f->_id ?>"><button type="button" class='btn btn-primary btn1'>Supprimer</button></a>
 </div></a>
+
+<hr class='bottomSpace line'>
+
 <?php endforeach; ?>
 <?php else: ?>
     <h2>Vous n'avez créé aucune fiche pour l'instant !</h2>

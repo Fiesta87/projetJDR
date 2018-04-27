@@ -23,16 +23,26 @@ $form->prepare();
 
 <p>L'un des champs n'est pas correct !</p>
 
+<hr class='bottomSpace line'>
+
 <?php endif ?>
 
 <h1>Ajout d'une fiche</h1>
+
+<hr class='bottomSpace line'>
 
 <form class="form-edit" method="post">
 
     <?= $this->formLabel($form->get('nom')); ?>
     <?= $this->formElement($form->get('nom')); ?>
+
+    <hr class='bottomSpace line'>
+
     <?= $this->formLabel($form->get('description')); ?>
     <?= $this->formElement($form->get('description')); ?>
+
+    <hr class='bottomSpace line'>
+    
     <button class="btn btn-primary btn1" type="submit">Créer la nouvelle fiche</button>
 
 </form>
