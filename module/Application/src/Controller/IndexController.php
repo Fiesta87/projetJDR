@@ -2,7 +2,6 @@
 namespace Application\Controller;
 
 use Application\Model\NoeudXml;
-use Application\Model\AttributXML;
 use Application\Model\Xml;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\JsonModel;
@@ -36,53 +35,6 @@ class IndexController extends AbstractActionController
 
     // liste des fiche de la galerie
     public function indexAction() {
-/*
-        $noeud = array();
-        $noeud[0]=new NoeudXml();
-        $noeud[0]->name="fichePersoType";
-
-        $noeudChild = array();
-        $noeudChild[0]=new NoeudXml();
-        $noeudChild[0]->name="Attribut";
-
-        $noeudChildChild = array();
-        $noeudChildChild[0]=new NoeudXml();
-        $noeudChildChild[1]=new NoeudXml();
-        $noeudChildChild[2]=new NoeudXml();
-
-        $noeudChildChild[0]->name="Physique";
-        $noeudChildChild[0]->value="200";
-        $noeudChildChild[0]->attribute['name'] ="value";
-        $noeudChildChild[0]->attribute['value'] ="1";
-
-        $noeudChildChild[1]->name="Mental";
-        $noeudChildChild[1]->value="300";
-        $noeudChildChild[1]->attribute['name'] ="value";
-        $noeudChildChild[1]->attribute['value'] ="1";
-
-        $noeudChildChild[2]->name="Social";
-        $noeudChildChild[2]->value="10";
-        $noeudChildChild[2]->attribute['name'] ="value";
-        $noeudChildChild[2]->attribute['value']  ="1";
-
-
-
-        $noeudChild[0]->child=$noeudChildChild;
-        $noeud[0]->child=$noeudChild;
-
-
-
-
-
-        print_r($noeud);
-
-        $xml= new Xml();
-        $res = $xml->createXML($noeud);
-
-        $res->save("test.xml");*/
-
-
-
 
         $page = (int)$this->params()->fromRoute('page', -1);
 
@@ -124,11 +76,49 @@ class IndexController extends AbstractActionController
             $boutonFavorisActif = false;
         }
 
+        $fiche = $this->_tableFiche->find($id);
+
+        $noeud = $fiche->toXML();
+
+        $xml= new Xml();
+        $res = $xml->createXML($noeud);
+
+        $res->save(str_replace(" ", "_", $fiche->_nom) . ".xml");
+
         return new ViewModel([
-            'fiche' => $this->_tableFiche->find($id),
+            'fiche' => $fiche,
             'boutonFavorisActif' => $boutonFavorisActif,
             'fav' => $fav,
         ]);
+    }
+
+    // téléchargement d'une fiche spécifique
+    public function telechargeAction() {
+
+        $id = (int)$this->params()->fromRoute('id', -1);
+
+        $fiche = $this->_tableFiche->find($id);
+
+        $noeud = $fiche->toXML();
+
+        $xml= new Xml();
+        $res = $xml->createXML($noeud);
+
+        $fileName = str_replace(" ", "_", $fiche->_nom) . ".xml";
+
+        $res->save($fileName);
+
+        $response = new \Zend\Http\Response\Stream();
+        $response->setStream(fopen($fileName, 'r'));
+        $response->setStatusCode(200);
+
+        $headers = new \Zend\Http\Headers();
+        $headers->addHeaderLine('Content-Type', 'text/xml')
+                ->addHeaderLine('Content-Disposition', 'attachment; filename="' . $fileName . '"')
+                ->addHeaderLine('Content-Length', filesize($fileName));
+
+        $response->setHeaders($headers);
+        return $response;
     }
 
     //favoris

@@ -52,6 +52,21 @@ return [
                 ],
             ],
 
+            // téléchargement d'une fiche spécifique
+            'telecharge' => [
+                'type'    => Segment::class,
+                'options' => [
+                    'route'    => '/telecharge/:id',
+                    'constraints' => [
+                        'id' => '[0-9]+',
+                    ],
+                    'defaults' => [
+                        'controller'    => Controller\IndexController::class,
+                        'action'        => 'telecharge',
+                    ],
+                ],
+            ],
+
             // favoris
             'favoris' => [
                 'type'    => Segment::class,
