@@ -1,6 +1,9 @@
 <?php
 namespace Application\Controller;
 
+use Application\Model\NoeudXml;
+use Application\Model\AttributXML;
+use Application\Model\Xml;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\JsonModel;
 use Application\Model\Fiche;
@@ -20,6 +23,9 @@ class IndexController extends AbstractActionController
     private $_tableMetadata;
     private $_tableFavoris;
 
+
+
+
     public function __construct(AuthManager $authManager, FicheTable $tableFiche, MetadataTable $tableMetadata, FavorisTable $tableFavoris)
     {
         $this->_authManager = $authManager;
@@ -30,6 +36,53 @@ class IndexController extends AbstractActionController
 
     // liste des fiche de la galerie
     public function indexAction() {
+/*
+        $noeud = array();
+        $noeud[0]=new NoeudXml();
+        $noeud[0]->name="fichePersoType";
+
+        $noeudChild = array();
+        $noeudChild[0]=new NoeudXml();
+        $noeudChild[0]->name="Attribut";
+
+        $noeudChildChild = array();
+        $noeudChildChild[0]=new NoeudXml();
+        $noeudChildChild[1]=new NoeudXml();
+        $noeudChildChild[2]=new NoeudXml();
+
+        $noeudChildChild[0]->name="Physique";
+        $noeudChildChild[0]->value="200";
+        $noeudChildChild[0]->attribute['name'] ="value";
+        $noeudChildChild[0]->attribute['value'] ="1";
+
+        $noeudChildChild[1]->name="Mental";
+        $noeudChildChild[1]->value="300";
+        $noeudChildChild[1]->attribute['name'] ="value";
+        $noeudChildChild[1]->attribute['value'] ="1";
+
+        $noeudChildChild[2]->name="Social";
+        $noeudChildChild[2]->value="10";
+        $noeudChildChild[2]->attribute['name'] ="value";
+        $noeudChildChild[2]->attribute['value']  ="1";
+
+
+
+        $noeudChild[0]->child=$noeudChildChild;
+        $noeud[0]->child=$noeudChild;
+
+
+
+
+
+        print_r($noeud);
+
+        $xml= new Xml();
+        $res = $xml->createXML($noeud);
+
+        $res->save("test.xml");*/
+
+
+
 
         $page = (int)$this->params()->fromRoute('page', -1);
 
