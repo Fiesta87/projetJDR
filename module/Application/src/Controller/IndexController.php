@@ -71,23 +71,21 @@ class IndexController extends AbstractActionController
         $fav = (int)$this->params()->fromQuery('fav', 0);
 
         $boutonFavorisActif = true;
+        $connected = $this->_authManager->isConnected();
 
-        if($fav == 1 || $this->_tableFavoris->isInFavorisOfUser($id, $this->_authManager->getUserData()['id'])){
-            $boutonFavorisActif = false;
+        if($connected){
+            if($fav == 1 || $this->_tableFavoris->isInFavorisOfUser($id, $this->_authManager->getUserData()['id'])){
+                $boutonFavorisActif = false;
+            }
         }
+        
 
         $fiche = $this->_tableFiche->find($id);
-
-        $noeud = $fiche->toXML();
-
-        $xml= new Xml();
-        $res = $xml->createXML($noeud);
-
-        $res->save(str_replace(" ", "_", $fiche->_nom) . ".xml");
 
         return new ViewModel([
             'fiche' => $fiche,
             'boutonFavorisActif' => $boutonFavorisActif,
+            'connected' => $connected,
             'fav' => $fav,
         ]);
     }

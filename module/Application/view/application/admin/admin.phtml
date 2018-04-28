@@ -8,18 +8,20 @@
 
 <a href="/add"><button type="button" class='btn btn-primary btn1'>Ajouter une fiche</button></a>
 
+<hr class='bottomSpace line'>
+
 <?php if(!empty($fiches)): ?>
 <?php foreach ($fiches as $f) : ?>
 <a href="/editfiche/<?= $f->_id ?>"><div class='row item'>
 
     <div class='col-sm-2'>
-        <h2 class='secontitle'><?= $f->_nom ?></h2>
+        <h2 class='secontitle'><?= $f->_nom ?>
+    <a href="/delete/<?= $f->_id ?>"><button type="button" class='btn btn-primary btn1'>Supprimer</button></a></h2>
     </div>
 
     <div class='col-sm-10 itemTxt'>
         <p class='desc'> <?= $f->_description ?> </p><br/>
     </div>
-    <a href="/delete/<?= $f->_id ?>"><button type="button" class='btn btn-primary btn1'>Supprimer</button></a>
 </div></a>
 
 <hr class='bottomSpace line'>

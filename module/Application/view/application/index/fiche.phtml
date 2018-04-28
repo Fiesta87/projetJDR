@@ -8,10 +8,18 @@
 <p><?= $fiche->_nom ?> a bien été supprimée de vos favoris.</p>
 <?php endif ?>
 
-<?php if($boutonFavorisActif): ?>
-<a href="/addfavoris/<?= $fiche->_id ?>"><button type="button" class='btn btn-primary btn1'>Ajouter à mes favoris</button></a>
+<?php if($connected): ?>
+
+    <?php if($boutonFavorisActif): ?>
+        <a href="/addfavoris/<?= $fiche->_id ?>"><button type="button" class='btn btn-primary btn1'>Ajouter à mes favoris</button></a>
+    <?php else: ?>
+        <a href="/removefavoris/<?= $fiche->_id ?>"><button type="button" class='btn btn-primary btn1'>Supprimer de mes favoris</button></a>
+    <?php endif ?>
+
 <?php else: ?>
-<a href="/removefavoris/<?= $fiche->_id ?>"><button type="button" class='btn btn-primary btn1'>Supprimer de mes favoris</button></a>
+
+    <a href="/login"><button type="button" class='btn btn-primary btn1'>Ajouter à mes favoris</button></a>
+
 <?php endif ?>
 
 <a href="/telecharge/<?= $fiche->_id ?>" target="_blank"><button type="button" class='btn btn-primary btn1'>Télécharger</button></a>

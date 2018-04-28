@@ -1,16 +1,18 @@
 <h1 id='maintitle'>Les plus populaires</h1><hr class='bottomSpace line'>
 <?php foreach ($favoris as $f) : ?>
-<a href="/fiche/<?= $f->_id ?>"><div class='row item'>
+<div class='row item'>
 
     <div class='col-sm-2'>
+    <a href="/fiche/<?= $f->_id ?>">
         <h2 class='secontitle'><?= $f->_nom ?></h2>
         <p class='desc'>Par <?= $f->_userName ?></p>
+    </a>
     </div>
 
     <div class='col-sm-10 itemTxt'>
         <p class='desc'> <?= $f->_description ?> </p><br/>
     </div>
-</div></a>
+</div>
 
 <hr class='bottomSpace line'>
 
@@ -27,17 +29,19 @@
 <hr class='bottomSpace line'>
 
 <?php foreach ($fiches as $f) : ?>
-<a href="/fiche/<?= $f->_id ?>"><div class='row item'>
+<div class='row item'>
 
     <div class='col-sm-2'>
+    <a href="/fiche/<?= $f->_id ?>">
         <h2 class='secontitle'><?= $f->_nom ?></h2>
         <p class='desc'>Par <?= $f->_userName ?></p>
+    </a>
     </div>
 
     <div class='col-sm-10 itemTxt'>
         <p class='desc'> <?= $f->_description ?> </p><br/>
     </div>
-</div></a>
+</div>
 
 <hr class='bottomSpace line'>
 

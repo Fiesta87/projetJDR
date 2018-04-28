@@ -35,6 +35,10 @@ class AuthManager
         
         return $result;
     }
+
+    public function isConnected(){
+        return $this->authService->getIdentity() != null;
+    }
     
     public function logout()
     {

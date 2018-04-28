@@ -43,18 +43,28 @@ $form->get('password')->setAttributes([
 <div class="row">
     <div class="col-md-offset-4 col-md-3">
         <form class="form-signin" method="post">
-            <h2 class="form-signin-heading">Please sign in</h2>
+            <h2 class="form-signin-heading">Créez votre compte !</h2>
+            <hr class='bottomSpace line'>
+
             <?= $this->formLabel($form->get('username')); ?>
             <?= $this->formElement($form->get('username')); ?>
+            <hr class='bottomSpace line'>
+            
             <?= $this->formLabel($form->get('useremail')); ?>
             <?= $this->formElement($form->get('useremail')); ?>
+            <hr class='bottomSpace line'>
+            
             <?= $this->formLabel($form->get('password')); ?>
             <?= $this->formElement($form->get('password')); ?>
+            <hr class='bottomSpace line'>
+            
             <?= $this->formLabel($form->get('passwordVerification')); ?>
             <?= $this->formElement($form->get('passwordVerification')); ?>
+            <hr class='bottomSpace line'>
+            
             <?= $this->formElement($form->get('redirect_url')); ?>
             <?= $this->formElement($form->get('csrf')) ?>
-            <button class="btn1" type="submit">Sign in</button>
+            <button class="btn1" type="submit">Valider</button>
         </form>
     </div>
 </div>
