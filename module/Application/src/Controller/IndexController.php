@@ -78,7 +78,6 @@ class IndexController extends AbstractActionController
                 $boutonFavorisActif = false;
             }
         }
-        
 
         $fiche = $this->_tableFiche->find($id);
 
